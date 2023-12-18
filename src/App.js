@@ -1,19 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/GlobalStyle';
+import theme from './styles/theme';
+// style + assets
+import './styles/index.css';
+import Router from './Router';
+
+// recoil
+import { RecoilRoot } from 'recoil';
 
 function App() {
+	const charAt = `
+
+  ░░░    ░░░
+  ▒▒▒▒  ▒▒▒▒
+  ▒▒ ▒▒▒▒ ▒▒
+  ▓▓  ▓▓  ▓▓
+  ██      ██
+
+  `;
+
+	console.info(`%c${charAt}`, 'color: #5BE49B');
+
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>
-					Edit <code>src/App.js</code> and save to reload.
-				</p>
-				<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-					Learn React
-				</a>
-			</header>
-		</div>
+		<RecoilRoot>
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+				<Router />
+			</ThemeProvider>
+		</RecoilRoot>
 	);
 }
 

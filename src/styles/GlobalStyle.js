@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import '../fonts/index.css';
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
@@ -21,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     }
     body{
         line-height: 1;
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family: 'Pretendard', sans-serif;
         background-color: #F6F9F0;
         margin-bottom: 100px;
     }

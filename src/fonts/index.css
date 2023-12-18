@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'Pretendard';
+	src:
+		local('Pretendard'),
+		url('Pretendard-Medium.woff') format('opentype');
+}
+
+@font-face {
+	font-family: 'GmarketSansBold';
+	src:
+		local('GmarketSansBold'),
+		url('GmarketSansBold.otf') format('opentype');
+}
