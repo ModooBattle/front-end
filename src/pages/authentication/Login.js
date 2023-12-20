@@ -6,6 +6,19 @@ const Title = styled.h1`
 	color: ${({ theme }) => theme.colors.grey};
 `;
 
+const KakaoLoginBtn = styled.button`
+	display: flex;
+	width: 342px;
+	height: 48px;
+	padding: 8px 12px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+	border-radius: 8px;
+	background: #fee500;
+`;
+
 export default function Login() {
 	return (
 		<div className="bg-white">
@@ -27,6 +40,7 @@ export default function Login() {
 					fill="black"
 				/>
 			</svg>
+			<KakaoLoginBtn>카카오 로그인</KakaoLoginBtn>
 		</div>
 	);
 }
