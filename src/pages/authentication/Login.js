@@ -20,6 +20,17 @@ const KakaoLoginBtn = styled.button`
 `;
 
 export default function Login() {
+	const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+	const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+	const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+	const handleKakaoLogin = () => {
+		window.location.href = KAKAO_AUTH_URI;
+	};
+
+	// src/components/layout/KakaoLayout.ts
+	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
+	console.log(AUTHORIZATION_CODE);
+
 	return (
 		<div className="bg-white">
 			<Title>모두의 대결</Title>
@@ -40,7 +51,7 @@ export default function Login() {
 					fill="black"
 				/>
 			</svg>
-			<KakaoLoginBtn>카카오 로그인</KakaoLoginBtn>
+			<KakaoLoginBtn onClick={handleKakaoLogin}>카카오 로그인</KakaoLoginBtn>
 		</div>
 	);
 }
