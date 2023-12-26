@@ -14,7 +14,7 @@ function Layout() {
 
 export default Layout;
 
-const MainLayout = styled.div`
+const MainLayout = styled.section`
 	width: 100%;
 	height: 100vh;
 	display: flex;
@@ -26,12 +26,13 @@ const MainLayout = styled.div`
 		width: 100%;
 		max-width: 550px;
 		height: calc(100% - 10vh);
-
+		background: ${({ theme }) => theme.colors.bgBlack};
 		border-radius: 40px;
 		border: 12px solid #fff;
 		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 		position: relative;
 		overflow: hidden;
+		padding: 24px;
 	}
 	@media (min-width: 1000px) {
 		& > .contents_container {
