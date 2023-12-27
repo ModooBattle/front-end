@@ -50,11 +50,6 @@ export default function Login() {
 	const handleKakaoLogin = () => {
 		window.location.href = KAKAO_AUTH_URI;
 	};
-
-	// src/components/layout/KakaoLayout.ts
-	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
-	console.log(AUTHORIZATION_CODE);
-
 	return (
 		<LoginLayout>
 			<h2 className="title">모두의 대결</h2>
