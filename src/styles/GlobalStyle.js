@@ -3,6 +3,12 @@ import reset from 'styled-reset';
 import '../fonts/index.css';
 
 const GlobalStyles = createGlobalStyle`
+    :root {
+        --primary-color: #FF9501;
+        --primary-dark: #F57902;
+
+        --text-main-color: #151517;
+    }
     ${reset}
     
     a{

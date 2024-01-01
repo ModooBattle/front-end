@@ -2,7 +2,16 @@
 	font-family: 'Pretendard';
 	src:
 		local('Pretendard'),
+		url('Pretendard-Light.woff') format('opentype');
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	src:
+		local('Pretendard'),
 		url('Pretendard-Medium.woff') format('opentype');
+	font-weight: 400;
 }
 
 @font-face {

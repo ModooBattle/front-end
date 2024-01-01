@@ -17,6 +17,8 @@ const LoginLayout = styled.section`
 		font-size: 38px;
 		font-family: GmarketSansBold;
 		margin-top: 32px;
+		line-height: 150%;
+		letter-spacing: -1.52px;
 	}
 	> .intro-section {
 		position: relative;
@@ -24,7 +26,8 @@ const LoginLayout = styled.section`
 		> .intro-img-wrap {
 			position: absolute;
 			display: flex;
-			right: 0;
+			right: -24px;
+			bottom: 58px;
 		}
 	}
 `;
@@ -41,6 +44,7 @@ const KakaoLoginBtn = styled.button`
 	background: #fee500;
 	font-size: 16px;
 	color: #371d1e;
+	font-weight: medium;
 `;
 
 export default function Login() {

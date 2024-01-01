@@ -31,7 +31,7 @@ export default function KakaoLogin() {
 		} catch (error) {
 			if (error.response.status === 401) {
 				console.log(error);
-				navigate('/sign-up');
+				navigate('/sign-up-1');
 			}
 		}
 	};

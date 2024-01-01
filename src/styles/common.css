@@ -1,0 +1,8 @@
+button:disabled {
+  background-color: #373735 !important;
+  color: #686866 !important;
+}
+
+.btn-primary {
+  font-size: 1.25rem !important;
+}
