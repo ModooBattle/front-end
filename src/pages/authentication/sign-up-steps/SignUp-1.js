@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { styled } from 'styled-components';
 import TextField from '@mui/material/TextField';
+import { withStyles } from '@material-ui/core/styles';
 // third party - from validation
 import * as Yup from 'yup';
 import { Formik, ErrorMessage } from 'formik';
@@ -34,6 +35,30 @@ const Title = styled.h3`
 const BtnFull = styled.button`
 	width: 100%;
 `;
+
+const CustomTextField = withStyles({
+	root: {
+		'& label.Mui-focused': {
+			color: '#90908E'
+		},
+		'& .MuiInput-underline:after': {
+			borderBottomColor: '#FF9501'
+		},
+		'& .MuiInput-underline:before': {
+			borderBottomColor: '#90908E'
+		},
+		'& .MuiFormLabel-root': {
+			color: '#90908E'
+		},
+		'&.MuiFormControl-root': {
+			display: 'flex',
+			width: '100%'
+		},
+		'&': {
+			backgroundColor: 'transparent'
+		}
+	}
+})(TextField);
 
 export default function SignUp1() {
 	const navigate = useNavigate();
@@ -86,46 +111,49 @@ export default function SignUp1() {
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
-				{' '}
 				<NavTop>회원가입</NavTop>
 				<Title>
 					안녕하세요!
 					<br />
 					닉네임이 무엇인가요?
 				</Title>
-				<Formik
-					initialValues={{
-						username: nickname
-					}}
-					validationSchema={Yup.object().shape({
-						username: Yup.string()
-							.matches(/^[가-힣a-z0-9]{3,15}$/, '사용 불가능한 닉네임 입니다.')
-							.min(1, '1글자 이상으로 작성 해주세요.')
-							.max(15, '15글자 이내로 작성 해 주세요.')
-							.required('필수로 작성 해 주세요.')
-					})}
-					onSubmit={CheckDuplication}
-					// enableReinitialize
-				>
-					{({ values, handleChange, handleSubmit, isSubmitting }) => (
-						<form onSubmit={handleSubmit} className="flex items-center mt-2">
-							<TextField
-								id="nicname"
-								name="username"
-								label="닉네임"
-								variant="standard"
-								value={values.username}
-								onChange={handleChange}
-								disabled={active}
-								inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-							/>
-							<ErrorMessage name="username" component="div" />
-							<button className="btn btn-primary" type="submit" disabled={active ? active : isSubmitting}>
-								중복검사
-							</button>
-						</form>
-					)}
-				</Formik>
+				<div className="mt-[32px]">
+					<Formik
+						initialValues={{
+							username: nickname
+						}}
+						validationSchema={Yup.object().shape({
+							username: Yup.string()
+								.matches(/^[가-힣a-z0-9]{3,15}$/, '사용 불가능한 닉네임 입니다.')
+								.min(1, '1글자 이상으로 작성 해주세요.')
+								.max(15, '15글자 이내로 작성 해 주세요.')
+								.required('필수로 작성 해 주세요.')
+						})}
+						onSubmit={CheckDuplication}
+						// enableReinitialize
+					>
+						{({ values, handleChange, handleSubmit, isSubmitting }) => (
+							<section>
+								<form onSubmit={handleSubmit} className="flex items-end mt-2">
+									<CustomTextField
+										id="nicname"
+										name="username"
+										label="닉네임"
+										variant="standard"
+										value={values.username}
+										onChange={handleChange}
+										disabled={active}
+										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
+									/>
+									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
+										중복검사
+									</button>
+								</form>
+								<ErrorMessage name="username" component="div" className="mt-2 text-error" />
+							</section>
+						)}
+					</Formik>
+				</div>
 			</section>
 			<section>
 				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
