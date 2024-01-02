@@ -30,3 +30,20 @@ input.Mui-disabled:disabled {
 .btn-primary {
 	font-size: 1.25rem !important;
 }
+
+.radio-pick-gender [type='radio'] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.radio-pick-gender [type='radio'] + svg {
+	cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.radio-pick-gender [name='test']:checked + svg {
+	outline: 2px solid #ff9501;
+	border-radius: 50%;
+}

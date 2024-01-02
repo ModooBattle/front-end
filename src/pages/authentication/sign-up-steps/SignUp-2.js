@@ -43,21 +43,26 @@ export default function SignUp1() {
 		navigate('/sign-up-2');
 	};
 
+	const handleSelectFemale = (e) => {
+		console.log(e.target.value);
+	};
+
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
-				{' '}
 				<NavTop>회원가입</NavTop>
 				<Title>성별을 알려주세요</Title>
-				<section className="flex mt-[32px]">
-					<div className="basis-1/2">
+				<section className="radio-pick-gender flex mt-[32px]">
+					<label className="basis-1/2 flex flex-col items-center" name="female" onChange={handleSelectFemale}>
+						<input type="radio" name="female" value="female" />
 						<WomanDefault />
 						<h3 className="text-center text-xl mt-[12px]">여성</h3>
-					</div>
-					<div className="basis-1/2">
+					</label>
+					<label className="basis-1/2 flex flex-col items-center" name="male" onChange={handleSelectFemale}>
+						<input type="radio" name="male" value="male" />
 						<ManDefault />
 						<h3 className="text-center text-xl mt-[12px]">남성</h3>
-					</div>
+					</label>
 				</section>
 			</section>
 			<section>
