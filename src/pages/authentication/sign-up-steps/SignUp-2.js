@@ -1,7 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { useNavigate } from 'react-router-dom';
 //
 import { ReactComponent as WomanDefault } from '../../../asset/images/woman-default.svg';
@@ -33,19 +31,24 @@ const BtnFull = styled.button`
 	width: 100%;
 `;
 
-export default function SignUp1() {
+export default function SignUp2() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [nickname, setNickname] = useState('');
-	const MySwal = withReactContent(Swal);
+	const [gender, setGender] = useState('');
 
 	const handleNextBtn = () => {
-		navigate('/sign-up-2');
+		navigate('/sign-up-3');
 	};
 
 	const handleSelectFemale = (e) => {
-		console.log(e.target.value);
+		setGender(e.target.value);
 	};
+
+	useEffect(() => {
+		if (gender !== '') {
+			setActive(true);
+		}
+	}, [gender]);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -53,13 +56,13 @@ export default function SignUp1() {
 				<NavTop>회원가입</NavTop>
 				<Title>성별을 알려주세요</Title>
 				<section className="radio-pick-gender flex mt-[32px]">
-					<label className="basis-1/2 flex flex-col items-center" name="female" onChange={handleSelectFemale}>
-						<input type="radio" name="female" value="female" />
+					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
+						<input type="radio" name="gender" value="female" />
 						<WomanDefault />
 						<h3 className="text-center text-xl mt-[12px]">여성</h3>
 					</label>
-					<label className="basis-1/2 flex flex-col items-center" name="male" onChange={handleSelectFemale}>
-						<input type="radio" name="male" value="male" />
+					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
+						<input type="radio" name="gender" value="male" />
 						<ManDefault />
 						<h3 className="text-center text-xl mt-[12px]">남성</h3>
 					</label>
