@@ -1,5 +1,7 @@
-import { Axios } from 'axios';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
@@ -38,18 +40,34 @@ const CustomLabel = styled.label`
 	flex-basis: 50%;
 	min-height: 118px;
 `;
-export default function SignUp3() {
+export default function SignUp4() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [sport, setSport] = useState('');
+	const [sportsList, setSportsList] = useState([]);
+	const [sport, setSport] = useRecoilState(userRegisterInfoAtom);
+
+	const getSportsList = async () => {
+		try {
+			await axios.get(`https://121.140.7.121:1444/api/sport/sports/list`).then((result) => {
+				setSportsList(result.data);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-5');
 	};
 
 	const handleSelectSports = (e) => {
-		setSport(e.target.value);
+		console.log(e);
+		setSport((prev) => ({ ...prev, gym: { ...prev.gym, sport: e.target.value } }));
 	};
+
+	useEffect(() => {
+		getSportsList();
+	}, []);
 
 	useEffect(() => {
 		if (sport !== '') {
@@ -65,27 +83,15 @@ export default function SignUp3() {
 				<NavTop>회원가입</NavTop>
 				<Title>대결 하려는 종목이 무엇인가요?</Title>
 				<section className="radio-pick-sports grid grid-cols-2 gap-[24px] mt-[32px]">
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectSports}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">복싱</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectSports}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">킥복싱</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectSports}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">주짓수</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
+					{sportsList.map((data, index) => (
+						<CustomLabel key={index} className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectSports}>
+							<input type="radio" name="age" value={data.id} />
+							<h3 className="text-xl w-full w-full h-full">{data.name}</h3>
+							<div className="flex justify-end w-full">
+								<Boxing />
+							</div>
+						</CustomLabel>
+					))}
 				</section>
 			</section>
 			<section>

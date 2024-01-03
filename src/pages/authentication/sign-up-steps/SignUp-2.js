@@ -1,3 +1,5 @@
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -34,14 +36,14 @@ const BtnFull = styled.button`
 export default function SignUp2() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [gender, setGender] = useState('');
+	const [gender, setGender] = useRecoilState(userRegisterInfoAtom);
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-3');
 	};
 
 	const handleSelectFemale = (e) => {
-		setGender(e.target.value);
+		setGender((prev) => ({ ...prev, gender: e.target.value }));
 	};
 
 	useEffect(() => {

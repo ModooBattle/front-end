@@ -109,7 +109,7 @@ export default function SignUp1() {
 	};
 
 	const handleNextBtn = () => {
-		// navigate('/sign-up-2');
+		navigate('/sign-up-2');
 	};
 
 	useEffect(() => {

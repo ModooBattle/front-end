@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
@@ -37,14 +39,14 @@ const CustomLabel = styled.label`
 export default function SignUp3() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [age, setAge] = useState('');
+	const [age, setAge] = useRecoilState(userRegisterInfoAtom);
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-4');
 	};
 
 	const handleSelectAge = (e) => {
-		setAge(e.target.value);
+		setAge((prev) => ({ ...prev, age: e.target.value }));
 	};
 
 	useEffect(() => {
