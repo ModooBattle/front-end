@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import TextField from '@mui/material/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -68,6 +69,7 @@ export default function SignUp1() {
 
 	const CheckDuplication = async () => {
 		setActive(true);
+		console.log(nickname);
 		try {
 			await axios
 				.get(`https://121.140.7.121:1444/api/user/signup`, {
@@ -78,6 +80,8 @@ export default function SignUp1() {
 				.then((result) => {
 					const { status, data } = result;
 					console.log(status);
+					console.log(data);
+					console.log(result);
 					if (status === 200) {
 						MySwal.fire({
 							title: <p>사용 할 수 있는 닉네임입니다. 이 닉네임으로 하시겠습니까?</p>,
@@ -105,8 +109,12 @@ export default function SignUp1() {
 	};
 
 	const handleNextBtn = () => {
-		navigate('/sign-up-2');
+		// navigate('/sign-up-2');
 	};
+
+	useEffect(() => {
+		console.log(nickname);
+	}, [nickname]);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -120,7 +128,7 @@ export default function SignUp1() {
 				<div className="mt-[32px]">
 					<Formik
 						initialValues={{
-							username: nickname
+							username: ''
 						}}
 						validationSchema={Yup.object().shape({
 							username: Yup.string()
@@ -145,6 +153,7 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
+									{console.log(values.username)}
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>

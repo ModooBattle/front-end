@@ -32,13 +32,13 @@ const BtnFull = styled.button`
 const CustomSelect = styled.select`
 	background: #373735;
 `;
-export default function SignUp3() {
+export default function SignUp6() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const [year, setYear] = useState('');
 
 	const handleNextBtn = () => {
-		navigate('/sign-up-6');
+		navigate('/sign-up-5');
 	};
 
 	const handleSelectYear = (e) => {
@@ -69,7 +69,7 @@ export default function SignUp3() {
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
 				<NavTop>회원가입</NavTop>
-				<Title>고르신 종목의 경력을 알려 주세요.</Title>
+				<Title>체급을 알려주세요</Title>
 				<section className="radio-pick-experience mt-[32px]">
 					<CustomSelect className="select select-bordered w-full max-w-xs custom-select" onChange={handleSelectYear}>
 						<option value="">선택 해 주세요</option>
