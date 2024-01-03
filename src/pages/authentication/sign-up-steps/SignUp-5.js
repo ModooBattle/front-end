@@ -29,13 +29,8 @@ const BtnFull = styled.button`
 	width: 100%;
 `;
 
-const CustomLabel = styled.label`
-	cursor: pointer;
-	padding: 16px;
-	background-color: #373735;
-	border-radius: 8px;
-	flex-basis: 50%;
-	min-height: 118px;
+const CustomSelect = styled.select`
+	background: #373735;
 `;
 export default function SignUp3() {
 	const navigate = useNavigate();
@@ -50,6 +45,14 @@ export default function SignUp3() {
 		setAge(e.target.value);
 	};
 
+	const forTest = () => {
+		let arr = [];
+		for (let i = 0; i < 10; i++) {
+			arr.push(<div>{i}</div>);
+		}
+		return arr;
+	};
+
 	useEffect(() => {
 		if (age !== '') {
 			setActive(true);
@@ -62,29 +65,12 @@ export default function SignUp3() {
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
 				<NavTop>회원가입</NavTop>
-				<Title>대결 하려는 종목이 무엇인가요?</Title>
-				<section className="radio-pick-sports grid grid-cols-2 gap-[24px] mt-[32px]">
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">복싱</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">킥복싱</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
-						<input type="radio" name="age" value="10" />
-						<h3 className="text-xl w-full w-full h-full">주짓수</h3>
-						<div className="flex justify-end w-full">
-							<Boxing />
-						</div>
-					</CustomLabel>
+				<Title>고르신 종목의 경력을 알려 주세요.</Title>
+				<section className="radio-pick-experience mt-[32px]">
+					{forTest}
+					<CustomSelect className="select select-bordered w-full max-w-xs custom-select">
+						<option value={i}>{i}년</option>
+					</CustomSelect>
 				</section>
 			</section>
 			<section>

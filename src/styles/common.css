@@ -81,3 +81,44 @@ input.Mui-disabled:disabled {
 	right: 16px;
 	bottom: 13px;
 }
+
+/********************* 종목 pick UI **********************/
+.radio-pick-sports [type='radio'] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.radio-pick-sports [type='radio'] {
+	cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.radio-pick-sports label {
+	position: relative;
+}
+
+.radio-pick-sports label:has([type='radio']:checked) {
+	outline: 2px solid #ff9501;
+	background-color: #fff3e0;
+	color: #ff9501;
+}
+
+.radio-pick-sports label:has([type='radio']:checked)::after {
+	content: '';
+	background-image: url('../asset/icons/check-box.svg');
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: 16px;
+	top: 13px;
+}
+
+/****************** */
+.custom-select::after {
+	content: '';
+	background-image: url('../asset/icons/arrow-select.svg');
+	width: 24px;
+	height: 24px;
+}
