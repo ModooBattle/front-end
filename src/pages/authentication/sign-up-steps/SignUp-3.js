@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
-
 const SignUpLayout = styled.section`
 	color: #fff;
 	height: 100%;
@@ -30,8 +29,10 @@ const BtnFull = styled.button`
 `;
 
 const CustomLabel = styled.label`
-	border: 1px solid red;
 	cursor: pointer;
+	padding: 16px;
+	background-color: #373735;
+	border-radius: 8px;
 `;
 export default function SignUp3() {
 	const navigate = useNavigate();
@@ -62,15 +63,15 @@ export default function SignUp3() {
 				<section className="radio-pick-age flex flex-col mt-[32px]">
 					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
 						<input type="radio" name="age" value="10" />
-						<h3 className="text-center text-xl mt-[12px]">10대</h3>
+						<h3 className="text-xl">10대</h3>
 					</CustomLabel>
-					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
+					<CustomLabel className="basis-1/2 flex flex-col items-center my-[16px]" name="age" onChange={handleSelectAge}>
 						<input type="radio" name="age" value="20" />
-						<h3 className="text-center text-xl mt-[12px]">20대</h3>
+						<h3 className="text-xl">20대</h3>
 					</CustomLabel>
 					<CustomLabel className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectAge}>
 						<input type="radio" name="age" value="30" />
-						<h3 className="text-center text-xl mt-[12px]">30대 이상</h3>
+						<h3 className="text-xl">30대 이상</h3>
 					</CustomLabel>
 				</section>
 			</section>

@@ -1,67 +1,83 @@
 button:disabled {
-  background-color: #373735 !important;
-  color: #686866 !important;
+	background-color: #373735 !important;
+	color: #686866 !important;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-  box-shadow: 0 0 0px 1000px transparent inset;
-  transition: background-color 5000s ease-in-out 0s;
+	-webkit-text-fill-color: #fff;
+	-webkit-box-shadow: 0 0 0px 1000px transparent inset;
+	box-shadow: 0 0 0px 1000px transparent inset;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 input:autofill,
 input:autofill:hover,
 input:autofill:focus,
 input:autofill:active {
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-  box-shadow: 0 0 0px 1000px transparent inset;
-  transition: background-color 5000s ease-in-out 0s;
+	-webkit-text-fill-color: #fff;
+	-webkit-box-shadow: 0 0 0px 1000px transparent inset;
+	box-shadow: 0 0 0px 1000px transparent inset;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 input.Mui-disabled:disabled {
-  -webkit-text-fill-color: #686866 !important;
+	-webkit-text-fill-color: #686866 !important;
 }
 
 .btn-primary {
-  font-size: 1.25rem !important;
+	font-size: 1.25rem !important;
 }
 
 /********************* 성별 pick UI **********************/
 .radio-pick-gender [type='radio'] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
-.radio-pick-gender [type='radio']+svg {
-  cursor: pointer;
+.radio-pick-gender [type='radio'] + svg {
+	cursor: pointer;
 }
 
 /* CHECKED STYLES */
-.radio-pick-gender [type='radio']:checked+svg {
-  outline: 2px solid #ff9501;
-  border-radius: 50%;
+.radio-pick-gender [type='radio']:checked + svg {
+	outline: 2px solid #ff9501;
+	border-radius: 50%;
 }
 
 /********************* 연령대 pick UI **********************/
 .radio-pick-age [type='radio'] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 .radio-pick-age [type='radio'] {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 /* CHECKED STYLES */
+.radio-pick-age label {
+	position: relative;
+}
+
 .radio-pick-age label:has([type='radio']:checked) {
-  outline: 2px solid #ff9501;
+	outline: 2px solid #ff9501;
+	background-color: #fff3e0;
+	color: #ff9501;
+}
+
+.radio-pick-age label:has([type='radio']:checked)::after {
+	content: '';
+	background-image: url('../asset/icons/check-box.svg');
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: 16px;
+	bottom: 13px;
 }
