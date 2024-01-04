@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
-import { ReactComponent as Boxing } from '../../../asset/images/boxing.svg';
 const SignUpLayout = styled.section`
 	color: #fff;
 	height: 100%;
@@ -35,19 +36,19 @@ const CustomSelect = styled.select`
 export default function SignUp3() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [year, setYear] = useState('');
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-6');
 	};
 
 	const handleSelectYear = (e) => {
-		setYear(e.target.value);
+		setUserRegisterInfo((prev) => ({ ...prev, year: e.target.value }));
 	};
 
 	const arrYears = () => {
 		let arr = [];
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= 9; i++) {
 			arr.push(
 				<option key={i} value={i}>
 					{i} 년
@@ -58,12 +59,12 @@ export default function SignUp3() {
 	};
 
 	useEffect(() => {
-		if (year !== '') {
+		if (userRegisterInfo.year !== '') {
 			setActive(true);
 		}
-	}, [year]);
+	}, [userRegisterInfo.year]);
 
-	console.log(year);
+	console.log(userRegisterInfo.year);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -74,7 +75,7 @@ export default function SignUp3() {
 					<CustomSelect className="select select-bordered w-full max-w-xs custom-select" onChange={handleSelectYear}>
 						<option value="">선택 해 주세요</option>
 						{arrYears()}
-						<option value={11}>10 년 이상</option>
+						<option value={10}>10 년 이상</option>
 					</CustomSelect>
 				</section>
 			</section>

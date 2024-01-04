@@ -1,8 +1,10 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
-import { ReactComponent as Boxing } from '../../../asset/images/boxing.svg';
 const SignUpLayout = styled.section`
 	color: #fff;
 	height: 100%;
@@ -35,35 +37,40 @@ const CustomSelect = styled.select`
 export default function SignUp6() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [year, setYear] = useState('');
+	const [weightList, setWeightList] = useState([]);
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+
+	const getSportsList = async () => {
+		try {
+			await axios
+				.get(`https://121.140.7.121:1444/api/sport/weight/list`, {
+					params: { sport_id: userRegisterInfo.gym.sport, gender: userRegisterInfo.gender }
+				})
+				.then((result) => {
+					setWeightList(result.data);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleNextBtn = () => {
-		navigate('/sign-up-5');
+		navigate('/sign-up-7');
 	};
 
-	const handleSelectYear = (e) => {
-		setYear(e.target.value);
-	};
-
-	const arrYears = () => {
-		let arr = [];
-		for (let i = 1; i <= 10; i++) {
-			arr.push(
-				<option key={i} value={i}>
-					{i} 년
-				</option>
-			);
-		}
-		return arr;
+	const handleSelectWeightList = (e) => {
+		setUserRegisterInfo(e.target.value);
 	};
 
 	useEffect(() => {
-		if (year !== '') {
+		if (userRegisterInfo.weight !== '') {
 			setActive(true);
 		}
-	}, [year]);
+	}, [userRegisterInfo.weight]);
 
-	console.log(year);
+	useEffect(() => {
+		getSportsList();
+	}, []);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -71,9 +78,13 @@ export default function SignUp6() {
 				<NavTop>회원가입</NavTop>
 				<Title>체급을 알려주세요</Title>
 				<section className="radio-pick-experience mt-[32px]">
-					<CustomSelect className="select select-bordered w-full max-w-xs custom-select" onChange={handleSelectYear}>
+					<CustomSelect className="select select-bordered w-full max-w-xs custom-select" onChange={handleSelectWeightList}>
 						<option value="">선택 해 주세요</option>
-						{arrYears()}
+						{weightList.map((data, index) => (
+							<option key={index} value={data.id}>
+								{data.name}
+							</option>
+						))}
 						<option value={11}>10 년 이상</option>
 					</CustomSelect>
 				</section>

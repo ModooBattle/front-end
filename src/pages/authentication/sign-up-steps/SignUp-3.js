@@ -39,23 +39,23 @@ const CustomLabel = styled.label`
 export default function SignUp3() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [age, setAge] = useRecoilState(userRegisterInfoAtom);
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-4');
 	};
 
 	const handleSelectAge = (e) => {
-		setAge((prev) => ({ ...prev, age: e.target.value }));
+		setUserRegisterInfo((prev) => ({ ...prev, age: e.target.value }));
 	};
 
 	useEffect(() => {
-		if (age !== '') {
+		if (userRegisterInfo.age !== '') {
 			setActive(true);
 		}
-	}, [age]);
+	}, [userRegisterInfo.age]);
 
-	console.log(age);
+	console.log(userRegisterInfo.age);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">

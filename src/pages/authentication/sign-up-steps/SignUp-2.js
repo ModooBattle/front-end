@@ -36,21 +36,21 @@ const BtnFull = styled.button`
 export default function SignUp2() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [gender, setGender] = useRecoilState(userRegisterInfoAtom);
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-3');
 	};
 
 	const handleSelectFemale = (e) => {
-		setGender((prev) => ({ ...prev, gender: e.target.value }));
+		setUserRegisterInfo((prev) => ({ ...prev, gender: e.target.value }));
 	};
 
 	useEffect(() => {
-		if (gender !== '') {
+		if (userRegisterInfo.gender !== '') {
 			setActive(true);
 		}
-	}, [gender]);
+	}, [userRegisterInfo.gender]);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -59,12 +59,12 @@ export default function SignUp2() {
 				<Title>성별을 알려주세요</Title>
 				<section className="radio-pick-gender flex mt-[32px]">
 					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
-						<input type="radio" name="gender" value="female" />
+						<input type="radio" name="gender" value="F" />
 						<WomanDefault />
 						<h3 className="text-center text-xl mt-[12px]">여성</h3>
 					</label>
 					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
-						<input type="radio" name="gender" value="male" />
+						<input type="radio" name="gender" value="M" />
 						<ManDefault />
 						<h3 className="text-center text-xl mt-[12px]">남성</h3>
 					</label>

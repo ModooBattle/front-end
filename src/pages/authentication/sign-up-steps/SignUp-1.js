@@ -65,7 +65,7 @@ const CustomTextField = withStyles({
 export default function SignUp1() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [nickname, setNickname] = useRecoilState(userRegisterInfoAtom);
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 	const MySwal = withReactContent(Swal);
 
 	const handleNextBtn = () => {
@@ -114,7 +114,7 @@ export default function SignUp1() {
 												if (result.isConfirmed) {
 													Swal.fire('성공!', '다음 버튼을 눌러 계속 진행 해 주세요.');
 													setActive(true);
-													setNickname((prev) => ({ ...prev, username: values.username }));
+													setUserRegisterInfo((prev) => ({ ...prev, username: values.username }));
 												} else if (result.isDenied) {
 													Swal.fire('실패', '닉네임을 다시 지정 해 주세요.');
 													setActive(false);

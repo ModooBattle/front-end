@@ -44,7 +44,7 @@ export default function SignUp4() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const [sportsList, setSportsList] = useState([]);
-	const [sport, setSport] = useRecoilState(userRegisterInfoAtom);
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
 	const getSportsList = async () => {
 		try {
@@ -61,8 +61,7 @@ export default function SignUp4() {
 	};
 
 	const handleSelectSports = (e) => {
-		console.log(e);
-		setSport((prev) => ({ ...prev, gym: { ...prev.gym, sport: e.target.value } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, sport: Number(e.target.value) } }));
 	};
 
 	useEffect(() => {
@@ -70,12 +69,13 @@ export default function SignUp4() {
 	}, []);
 
 	useEffect(() => {
-		if (sport !== '') {
+		if (userRegisterInfo.gym.sport !== null) {
 			setActive(true);
 		}
-	}, [sport]);
+	}, [userRegisterInfo.gym.sport]);
 
-	console.log(sport);
+	console.log(userRegisterInfo.gym);
+	console.log(userRegisterInfo.gym.sport);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
