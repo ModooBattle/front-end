@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../atom';
 import axios from 'axios';
 import { customAxios } from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,8 +8,9 @@ import { useNavigate } from 'react-router-dom';
 // import { accessAtom, uuidAtom, roomAtom, nicknameAtom } from '../utils/atom';
 
 export default function KakaoLogin() {
-	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
 	const navigate = useNavigate();
+	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
+	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
 	const kakaoLoginCode = async () => {
 		try {
@@ -30,11 +33,12 @@ export default function KakaoLogin() {
 			});
 		} catch (error) {
 			if (error.response.status === 401) {
-				console.log(error);
+				setUserRegisterInfo((prev) => ({ ...prev, email: error.response.data.email }));
 				navigate('/sign-up-1');
 			}
 		}
 	};
+	console.log(userRegisterInfo);
 	useEffect(() => {
 		kakaoLoginCode();
 	}, []);

@@ -59,11 +59,12 @@ export default function SignUp6() {
 	};
 
 	const handleSelectWeightList = (e) => {
-		setUserRegisterInfo(e.target.value);
+		console.log(e.target.value);
+		setUserRegisterInfo((prev) => ({ ...prev, weight: e.target.value }));
 	};
 
 	useEffect(() => {
-		if (userRegisterInfo.weight !== '') {
+		if (userRegisterInfo.weight !== null) {
 			setActive(true);
 		}
 	}, [userRegisterInfo.weight]);
@@ -71,6 +72,8 @@ export default function SignUp6() {
 	useEffect(() => {
 		getSportsList();
 	}, []);
+
+	console.log(userRegisterInfo);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">

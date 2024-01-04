@@ -9,6 +9,7 @@ import SignUp3 from './pages/authentication/sign-up-steps/SignUp-3';
 import SignUp4 from './pages/authentication/sign-up-steps/SignUp-4';
 import SignUp5 from './pages/authentication/sign-up-steps/SignUp-5';
 import SignUp6 from './pages/authentication/sign-up-steps/SignUp-6';
+import SignUp7 from './pages/authentication/sign-up-steps/SignUp-7';
 // import Main from './pages/Main/Main';
 
 const Router = () => {
@@ -24,6 +25,7 @@ const Router = () => {
 					<Route path="/sign-up-4" element={<SignUp4 />} />
 					<Route path="/sign-up-5" element={<SignUp5 />} />
 					<Route path="/sign-up-6" element={<SignUp6 />} />
+					<Route path="/sign-up-7" element={<SignUp7 />} />
 					{/* <Route path="/main" element={<Main />} /> */}
 				</Route>
 			</Routes>

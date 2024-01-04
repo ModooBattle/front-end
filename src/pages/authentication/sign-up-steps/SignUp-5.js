@@ -43,7 +43,7 @@ export default function SignUp3() {
 	};
 
 	const handleSelectYear = (e) => {
-		setUserRegisterInfo((prev) => ({ ...prev, year: e.target.value }));
+		setUserRegisterInfo((prev) => ({ ...prev, years: Number(e.target.value) }));
 	};
 
 	const arrYears = () => {
@@ -59,12 +59,10 @@ export default function SignUp3() {
 	};
 
 	useEffect(() => {
-		if (userRegisterInfo.year !== '') {
+		if (userRegisterInfo.years !== null) {
 			setActive(true);
 		}
-	}, [userRegisterInfo.year]);
-
-	console.log(userRegisterInfo.year);
+	}, [userRegisterInfo.years]);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
