@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import TextField from '@mui/material/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -64,57 +65,12 @@ const CustomTextField = withStyles({
 export default function SignUp1() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [nickname, setNickname] = useState('');
+	const [nickname, setNickname] = useRecoilState(userRegisterInfoAtom);
 	const MySwal = withReactContent(Swal);
-
-	const CheckDuplication = async () => {
-		setActive(true);
-		console.log(nickname);
-		try {
-			await axios
-				.get(`https://121.140.7.121:1444/api/user/signup`, {
-					params: {
-						username: nickname
-					}
-				})
-				.then((result) => {
-					const { status, data } = result;
-					console.log(status);
-					console.log(data);
-					console.log(result);
-					if (status === 200) {
-						MySwal.fire({
-							title: <p>사용 할 수 있는 닉네임입니다. 이 닉네임으로 하시겠습니까?</p>,
-							showDenyButton: true,
-							showCancelButton: true,
-							confirmButtonText: '네',
-							denyButtonText: `아니요`
-						}).then((result) => {
-							if (result.isConfirmed) {
-								Swal.fire('성공!', '다음 버튼을 눌러 계속 진행 해 주세요.');
-								setActive(true);
-							} else if (result.isDenied) {
-								Swal.fire('실패', '닉네임을 다시 지정 해 주세요.');
-								setActive(false);
-							}
-						});
-					}
-				});
-		} catch (error) {
-			console.log(error);
-			if (error.response.status === 400) {
-				console.log('중복되는 닉네임입니다. 다시 설정 해 주세요.');
-			}
-		}
-	};
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-2');
 	};
-
-	useEffect(() => {
-		console.log(nickname);
-	}, [nickname]);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -137,7 +93,41 @@ export default function SignUp1() {
 								.max(15, '15글자 이내로 작성 해 주세요.')
 								.required('필수로 작성 해 주세요.')
 						})}
-						onSubmit={CheckDuplication}
+						onSubmit={async (values) => {
+							try {
+								await axios
+									.get(`https://121.140.7.121:1444/api/user/signup`, {
+										params: {
+											username: values.username
+										}
+									})
+									.then((result) => {
+										const { status, data } = result;
+										if (status === 200) {
+											MySwal.fire({
+												title: <p>사용 할 수 있는 닉네임입니다. 이 닉네임으로 하시겠습니까?</p>,
+												showDenyButton: true,
+												showCancelButton: true,
+												confirmButtonText: '네',
+												denyButtonText: `아니요`
+											}).then((result) => {
+												if (result.isConfirmed) {
+													Swal.fire('성공!', '다음 버튼을 눌러 계속 진행 해 주세요.');
+													setActive(true);
+													setNickname((prev) => ({ ...prev, username: values.username }));
+												} else if (result.isDenied) {
+													Swal.fire('실패', '닉네임을 다시 지정 해 주세요.');
+													setActive(false);
+												}
+											});
+										}
+									});
+							} catch (error) {
+								if (error.response.status === 400) {
+									console.log('중복되는 닉네임입니다. 다시 설정 해 주세요.');
+								}
+							}
+						}}
 						// enableReinitialize
 					>
 						{({ values, handleChange, handleSubmit, isSubmitting }) => (
@@ -153,7 +143,6 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
-									{console.log(values.username)}
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>
