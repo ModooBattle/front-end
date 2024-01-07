@@ -122,3 +122,28 @@ input.Mui-disabled:disabled {
 	width: 24px;
 	height: 24px;
 }
+
+.map-container {
+	height: 300px;
+	color: #333;
+}
+
+.info {
+	display: flex;
+}
+
+.scroll-wrapper {
+	color: #fff;
+}
+
+.result-text {
+	color: #fff;
+}
+
+.places-list {
+	li {
+		padding: 12px;
+	}
+}
+
+/********************/

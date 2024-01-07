@@ -110,9 +110,9 @@ export default function SignUp1() {
 	const getSearchInfo = (title, info) => {
 		setSelectPlace(title);
 		console.log(info);
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, address: title } }));
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, latitude: info.La } }));
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, longitude: info.Ma } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.La } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.Ma } }));
 		setActive(true);
 	};
 
@@ -122,7 +122,11 @@ export default function SignUp1() {
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
 				<NavTop>회원가입</NavTop>
-				<Title>우리 동네를 알려주세요</Title>
+				<Title>
+					거의 다 왔어요!
+					<br />
+					이용 하시는 체육관을 선택 해 주세요!
+				</Title>
 				<div className="mt-[32px]">
 					<div className="landing-page">
 						<section className="landing-page__inner">
