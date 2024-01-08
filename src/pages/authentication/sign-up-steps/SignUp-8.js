@@ -10,9 +10,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import { useNavigate } from 'react-router-dom';
 
-import TestMap from '../TestMap';
-
-const { kakao } = window;
+import TestMap from '../KakaoMap';
 
 const SignUpLayout = styled.section`
 	color: #fff;
@@ -107,12 +105,15 @@ export default function SignUp1() {
 		}
 	};
 
-	const getSearchInfo = (title, info) => {
+	// const getSearchInfo = (title, info, gymAddress) => {
+	const getSearchInfo = ({ title, info, gymAddress }) => {
+		console.log('a');
+		console.log(gymAddress);
 		setSelectPlace(title);
-		console.log(info);
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.La } }));
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.Ma } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, address: gymAddress } }));
 		setActive(true);
 	};
 

@@ -140,9 +140,14 @@ input.Mui-disabled:disabled {
 	color: #fff;
 }
 
-.places-list {
-	li {
-		padding: 12px;
+ul#places-list {
+	> li {
+		padding: 6px;
+		.info-item {
+			&&.place-name {
+				font-size: 16px;
+			}
+		}
 	}
 }
 

@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { propsType } from '../LandingPage';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 
-const TestMap = (props, getSearchInfo) => {
+const KakaoMap = (props) => {
+	const [searchedInfo, setSearchedInfo] = useState({
+		title: '',
+		info: null,
+		gymAddress: ''
+	});
 	// 마커를 담는 배열
 	let markers = [];
 
@@ -85,6 +90,21 @@ const TestMap = (props, getSearchInfo) => {
 				// 해당 장소에 인포윈도우에 장소명을 표시
 				// mouseout 했을 때는 인포윈도우를 닫기
 				(function (marker, title) {
+					// 마커 클릭 시
+					kakao.maps.event.addListener(marker, 'click', function () {
+						displayInfowindow(marker, title);
+						const position = marker.getPosition();
+						setSearchedInfo((prev) => ({ ...prev, title: title }));
+						setSearchedInfo((prev) => ({ ...prev, info: position }));
+					});
+
+					// 목록 클릭 시
+					itemEl.onclick = function () {
+						displayInfowindow(marker, title);
+						const position = marker.getPosition();
+						setSearchedInfo((prev) => ({ ...prev, title: title }));
+						setSearchedInfo((prev) => ({ ...prev, info: position }));
+					};
 					// kakao.maps.event.addListener(marker, 'mouseover', function () {
 					// 	displayInfowindow(marker, title);
 					// });
@@ -93,13 +113,6 @@ const TestMap = (props, getSearchInfo) => {
 					// 	infowindow.close();
 					// });
 
-					kakao.maps.event.addListener(marker, 'click', function () {
-						displayInfowindow(marker, title);
-						const position = marker.getPosition();
-						props.getSearchInfo(title, position);
-						console.dir(marker);
-					});
-
 					// itemEl.onmouseover = function () {
 					// 	displayInfowindow(marker, title);
 					// };
@@ -107,12 +120,6 @@ const TestMap = (props, getSearchInfo) => {
 					// itemEl.onmouseout = function () {
 					// 	infowindow.close();
 					// };
-
-					itemEl.onclick = function () {
-						displayInfowindow(marker, title);
-						const position = marker.getPosition();
-						props.getSearchInfo(title, position);
-					};
 				})(marker, places[i].place_name);
 
 				fragment.appendChild(itemEl);
@@ -130,15 +137,26 @@ const TestMap = (props, getSearchInfo) => {
 
 		// 검색결과 항목을 Element로 반환하는 함수
 		function getListItem(index, places) {
-			function test(e) {
-				console.log(e);
+			function handleClick(e) {
+				console.log();
+				// childNodes에서 특정 클래스를 가진 노드 찾기
+				for (var i = 0; i < e.target.parentNode.childNodes.length; i++) {
+					var childNode = e.target.parentNode.childNodes[i];
+
+					// ELEMENT_NODE인 경우에만 클래스를 체크
+					if (childNode.nodeType === 1) {
+						if (childNode.classList.contains('address-name')) {
+							setSearchedInfo((prev) => ({ ...prev, gymAddress: childNode.innerText }));
+						}
+					}
+				}
 			}
 			const el = document.createElement('li');
 			const div = document.createElement('div');
 
 			el.className = 'item';
 
-			div.addEventListener('click', test);
+			div.addEventListener('click', handleClick);
 			div.id = `list-${index + 1}`;
 			div.className = 'info';
 
@@ -150,15 +168,15 @@ const TestMap = (props, getSearchInfo) => {
 					<h5 class="info-item place-name">${places.place_name}</h5>
 					${
 						places.road_address_name
-							? `<span class="info-item road-address-name">
+							? `<p class="info-item road-address-name">
 								${places.road_address_name}
-							 </span>
-							 <span class="info-item address-name">
+							 </p>
+							 <p class="info-item address-name">
 									${places.address_name}
-									</span>`
-							: `<span class="info-item address-name">
+									</p>`
+							: `<p class="info-item address-name">
 									${places.address_name}
-							</span>`
+							</p>`
 					}
 					<span class="info-item tel">
 						${places.phone}
@@ -247,12 +265,18 @@ const TestMap = (props, getSearchInfo) => {
 		}
 	}, [props.searchKeyword]);
 
+	useEffect(() => {
+		props.getSearchInfo(searchedInfo);
+	}, [searchedInfo]);
+
+	console.log(searchedInfo);
+
 	return (
 		<div className="map-container flex height">
 			<div id="map" className="w-4/6" />
 			<div id="search-result" className="w-2/6">
 				<p className="result-text">
-					<span className="result-keyword">{props.searchKeyword}</span>
+					<span className="result-keyword something">{props.searchKeyword}</span>
 					검색 결과
 				</p>
 				<div className="scroll-wrapper">
@@ -264,4 +288,4 @@ const TestMap = (props, getSearchInfo) => {
 	);
 };
 
-export default TestMap;
+export default KakaoMap;
