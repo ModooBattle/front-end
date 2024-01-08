@@ -67,10 +67,6 @@ export default function SignUp1() {
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 
-	const handleNextBtn = () => {
-		navigate('/sign-up-8');
-	};
-
 	const handleKeyword = (e) => {
 		setKeyword(e.target.value);
 	};
@@ -107,17 +103,35 @@ export default function SignUp1() {
 
 	// const getSearchInfo = (title, info, gymAddress) => {
 	const getSearchInfo = ({ title, info, gymAddress }) => {
-		console.log('a');
-		console.log(gymAddress);
 		setSelectPlace(title);
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.La } }));
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.Ma } }));
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, address: gymAddress } }));
-		setActive(true);
 	};
 
-	console.log(userRegisterInfo);
+	useEffect(() => {
+		if (userRegisterInfo.gym.address !== '') {
+			setActive(true);
+		}
+	}, [userRegisterInfo.gym.address]);
+
+	const signUp = async () => {
+		try {
+			await axios
+				.post(`https://121.140.7.121:1444/api/user/signup`, {
+					params: { userRegisterInfo }
+				})
+				.then((result) => {
+					console.log(result);
+					if (result.status === 200) {
+						navigate('/sign-up-9');
+					}
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
@@ -167,7 +181,7 @@ export default function SignUp1() {
 					inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 					required
 				/>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
+				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={signUp}>
 					다음
 				</BtnFull>
 			</section>

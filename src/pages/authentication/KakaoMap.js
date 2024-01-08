@@ -7,7 +7,7 @@ const { kakao } = window;
 const KakaoMap = (props) => {
 	const [searchedInfo, setSearchedInfo] = useState({
 		title: '',
-		info: null,
+		info: '',
 		gymAddress: ''
 	});
 	// 마커를 담는 배열
@@ -140,7 +140,7 @@ const KakaoMap = (props) => {
 			function handleClick(e) {
 				console.log();
 				// childNodes에서 특정 클래스를 가진 노드 찾기
-				for (var i = 0; i < e.target.parentNode.childNodes.length; i++) {
+				for (let i = 0; i < e.target.parentNode.childNodes.length; i++) {
 					var childNode = e.target.parentNode.childNodes[i];
 
 					// ELEMENT_NODE인 경우에만 클래스를 체크

@@ -59,8 +59,7 @@ export default function SignUp6() {
 	};
 
 	const handleSelectWeightList = (e) => {
-		console.log(e.target.value);
-		setUserRegisterInfo((prev) => ({ ...prev, weight: e.target.value }));
+		setUserRegisterInfo((prev) => ({ ...prev, weight: Number(e.target.value) }));
 	};
 
 	useEffect(() => {

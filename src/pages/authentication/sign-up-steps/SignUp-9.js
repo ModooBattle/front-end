@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom';
 
 import TestMap from '../KakaoMap';
 
-const { kakao } = window;
-
 const SignUpLayout = styled.section`
 	color: #fff;
 	height: 100%;
@@ -64,7 +62,7 @@ const CustomTextField = withStyles({
 	}
 })(TextField);
 
-export default function SignUp1() {
+export default function SignUp9() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
@@ -107,65 +105,38 @@ export default function SignUp1() {
 		}
 	};
 
-	const getSearchInfo = ({ title, info }) => {
-		setSelectPlace(title);
-		console.log(title);
-		console.log(info);
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, address: title } }));
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, latitude: info.La } }));
-		setUserRegisterInfo((prev) => ({ ...prev, location: { ...prev.location, longitude: info.Ma } }));
-	};
+	// const getSearchInfo = (title, info, gymAddress) => {
 
 	useEffect(() => {
-		if (userRegisterInfo.location.address !== '') {
+		if (userRegisterInfo.gym.address !== '') {
 			setActive(true);
 		}
-	}, [userRegisterInfo.location.address]);
+	}, [userRegisterInfo.gym.address]);
+
+	console.log(userRegisterInfo);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
 				<NavTop>회원가입</NavTop>
-				<Title>우리 동네를 알려주세요</Title>
+				<Title>회원가입 완료!</Title>
 				<div className="mt-[32px]">
 					<div className="landing-page">
 						<section className="landing-page__inner">
 							<div className="search-form-container mb-2">
 								<form className="search-form" onSubmit={submitKeyword}>
 									<label htmlFor="place" className="flex items-end">
-										<CustomTextField
-											id="movie-title"
-											name="place"
-											label="우리집 주소"
-											variant="standard"
-											onChange={keywordChange}
-											// disabled={active}
-											inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-											required
-										/>
-
 										<div className="btn-box ml-2">
 											<input className="btn btn-primary btn-sm" type="submit" value="검색" onClick={valueChecker} />
 										</div>
 									</label>
 								</form>
 							</div>
-							{/* 제출한 검색어 넘기기 */}
-							<TestMap searchKeyword={Keyword} getSearchInfo={getSearchInfo} />
 						</section>
 					</div>
 				</div>
 			</section>
 			<section>
-				<CustomTextField
-					id="movie-title"
-					name="place"
-					label="선택한 장소"
-					variant="standard"
-					value={selectPlace}
-					inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-					required
-				/>
 				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</BtnFull>
