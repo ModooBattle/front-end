@@ -62,10 +62,14 @@ const CustomTextField = withStyles({
 	}
 })(TextField);
 
-export default function SignUp1() {
+export default function SignUp9() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+
+	const handleNextBtn = () => {
+		navigate('/sign-up-8');
+	};
 
 	const handleKeyword = (e) => {
 		setKeyword(e.target.value);
@@ -102,13 +106,6 @@ export default function SignUp1() {
 	};
 
 	// const getSearchInfo = (title, info, gymAddress) => {
-	const getSearchInfo = ({ title, info, gymAddress }) => {
-		setSelectPlace(title);
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.La } }));
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.Ma } }));
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, address: gymAddress } }));
-	};
 
 	useEffect(() => {
 		if (userRegisterInfo.gym.address !== '') {
@@ -116,72 +113,31 @@ export default function SignUp1() {
 		}
 	}, [userRegisterInfo.gym.address]);
 
-	const signUp = async () => {
-		try {
-			await axios
-				.post(`https://121.140.7.121:1444/api/user/signup`, {
-					params: { userRegisterInfo }
-				})
-				.then((result) => {
-					console.log(result);
-					if (result.status === 200) {
-						navigate('/sign-up-9');
-					}
-				});
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	console.log(userRegisterInfo);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
 				<NavTop>회원가입</NavTop>
-				<Title>
-					거의 다 왔어요!
-					<br />
-					이용 하시는 체육관을 선택 해 주세요!
-				</Title>
+				<Title>회원가입 완료!</Title>
 				<div className="mt-[32px]">
 					<div className="landing-page">
 						<section className="landing-page__inner">
 							<div className="search-form-container mb-2">
 								<form className="search-form" onSubmit={submitKeyword}>
 									<label htmlFor="place" className="flex items-end">
-										<CustomTextField
-											id="movie-title"
-											name="place"
-											label="우리집 주소"
-											variant="standard"
-											onChange={keywordChange}
-											disabled={active}
-											inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-											required
-										/>
-
 										<div className="btn-box ml-2">
 											<input className="btn btn-primary btn-sm" type="submit" value="검색" onClick={valueChecker} />
 										</div>
 									</label>
 								</form>
 							</div>
-							{/* 제출한 검색어 넘기기 */}
-							<TestMap searchKeyword={Keyword} getSearchInfo={getSearchInfo} />
 						</section>
 					</div>
 				</div>
 			</section>
 			<section>
-				<CustomTextField
-					id="movie-title"
-					name="place"
-					label="선택한 장소"
-					variant="standard"
-					value={selectPlace}
-					inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-					required
-				/>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={signUp}>
+				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</BtnFull>
 			</section>

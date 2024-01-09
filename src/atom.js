@@ -9,11 +9,11 @@ export const userRegisterInfoAtom = atom({
 		years: null,
 		email: '',
 		weight: null,
-		location: {
-			address: '',
-			latitude: null,
-			longitude: null
-		},
+		// location: {
+		// 	address: '',
+		// 	latitude: null,
+		// 	longitude: null
+		// },
 		gym: {
 			name: '',
 			address: '',

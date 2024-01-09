@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
 import { ReactComponent as WomanDefault } from '../../../asset/images/woman-default.svg';
-import { ReactComponent as ManDefault } from '../../../asset/images/man-default.svg';
+import { ReactComponent as ManDefault } from '../../../asset/images/man-default-2.svg';
 
 const SignUpLayout = styled.section`
 	color: #fff;
