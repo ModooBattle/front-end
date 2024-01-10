@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { userRegisterInfoAtom } from '../../atom';
+import { userRegisterInfoAtom, accessTokenAtom, userInfoAtom } from '../../atom';
 import axios from 'axios';
 import { customAxios } from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
-// import { useRecoilState } from 'recoil';
 // import { accessAtom, uuidAtom, roomAtom, nicknameAtom } from '../utils/atom';
 
 export default function KakaoLogin() {
 	const navigate = useNavigate();
 	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
 	const kakaoLoginCode = async () => {
 		try {
@@ -19,11 +20,12 @@ export default function KakaoLogin() {
 				console.log(status);
 				if (status === 200) {
 					console.log(data);
-					// setAccessToken(data.tokens.access);
+					setAccessToken(data.access);
+					setUserInfo((prev) => ({ ...prev, username: data.username, current_location: data.current_location }));
+					navigate('/home'); // 404 에러남...ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
 					// setNickname(data.user.nickname);
 					// setUuid(data.user.uuid.split('-').join(''));
 					// setCurrentroom(data.user.uuid.split('-').join(''));
-					// navigate('/mymessage');
 				}
 				// else if (status === 201 || status === 206) {
 				// 	navigate('/nickname', { state: { user_uuid: data.user_uuid } });
@@ -32,6 +34,7 @@ export default function KakaoLogin() {
 				// }
 			});
 		} catch (error) {
+			// 회원 가입 해야 될 때
 			if (error.response.status === 401) {
 				setUserRegisterInfo((prev) => ({ ...prev, email: error.response.data.email }));
 				navigate('/sign-up-1');
@@ -39,6 +42,8 @@ export default function KakaoLogin() {
 		}
 	};
 	console.log(userRegisterInfo);
+	console.log(accessToken);
+	console.log(userInfo);
 	useEffect(() => {
 		kakaoLoginCode();
 	}, []);

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { userRegisterInfoAtom } from '../../../atom';
+import useAxios from '../../../useAxios';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userRegisterInfoAtom, accessTokenAtom, userInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import TextField from '@mui/material/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
 
 import TestMap from '../KakaoMap';
+import KakaoLogin from '../KakaoLogin';
 
 const SignUpLayout = styled.section`
 	color: #fff;
@@ -62,10 +64,13 @@ const CustomTextField = withStyles({
 	}
 })(TextField);
 
-export default function SignUp1() {
+export default function SignUp7() {
 	const navigate = useNavigate();
+	const pAxios = useAxios();
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
 	const handleKeyword = (e) => {
 		setKeyword(e.target.value);
@@ -120,21 +125,18 @@ export default function SignUp1() {
 
 	const signUp = async () => {
 		try {
-			await axios
-				.post(`https://121.140.7.121:1444/api/user/signup`, null, {
-					params: userRegisterInfo
-				})
-				.then((result) => {
-					if (result.status === 200) {
-						console.log(result);
-						navigate('/sign-up-8');
-						console.log('201');
-					} else if (result.status === 201) {
-						console.log(result);
-						navigate('/sign-up-8');
-						console.log('201');
-					}
-				});
+			await axios.post(`https://121.140.7.121:1444/api/user/signup`, userRegisterInfo).then((result) => {
+				if (result.status === 200) {
+					console.log(result.data);
+					setAccessToken(result.data.access);
+					setUserInfo((prev) => ({ ...prev, username: result.data.username, current_location: result.data.current_location }));
+					navigate('/sign-up-8');
+				} else if (result.status === 201) {
+					console.log(result);
+					console.log('201');
+					// navigate('/sign-up-8');
+				}
+			});
 		} catch (error) {
 			console.log(error);
 		}

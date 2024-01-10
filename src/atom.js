@@ -9,11 +9,6 @@ export const userRegisterInfoAtom = atom({
 		years: null,
 		email: '',
 		weight: null,
-		// location: {
-		// 	address: '',
-		// 	latitude: null,
-		// 	longitude: null
-		// },
 		gym: {
 			name: '',
 			address: '',
@@ -23,3 +18,26 @@ export const userRegisterInfoAtom = atom({
 		}
 	}
 });
+
+// authorization
+export const accessTokenAtom = atom({
+	key: 'accessToken',
+	default: null
+});
+
+export const userInfoAtom = atom({
+	key: 'userInfo',
+	default: { username: '', current_location: '' }
+});
+
+//authentication
+// export const userAtom = atom({
+// 	key: 'userAtom',
+// 	default: null
+// });
+
+// //logedinProvise 위한  recoil
+// export const userIdLogedInAtom = atom({
+// 	key: 'userIdLogedIn',
+// 	default: null
+// });
