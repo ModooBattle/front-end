@@ -125,9 +125,14 @@ export default function SignUp1() {
 					params: userRegisterInfo
 				})
 				.then((result) => {
-					console.log(result);
-					if (result.status === 201) {
+					if (result.status === 200) {
+						console.log(result);
 						navigate('/sign-up-8');
+						console.log('201');
+					} else if (result.status === 201) {
+						console.log(result);
+						navigate('/sign-up-8');
+						console.log('201');
 					}
 				});
 		} catch (error) {

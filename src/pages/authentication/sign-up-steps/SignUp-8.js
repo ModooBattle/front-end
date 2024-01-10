@@ -1,16 +1,32 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
-import TextField from '@mui/material/TextField';
-import { withStyles } from '@material-ui/core/styles';
+import { motion } from 'framer-motion';
 
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-
-import { useNavigate } from 'react-router-dom';
-
-import TestMap from '../KakaoMap';
+// <motion.div  />
+const MyComponent = () => {
+	return (
+		<motion.svg width="95" height="96" viewBox="0 0 95 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<g id="Group 554">
+				<motion.circle
+					id="Ellipse 71"
+					cx="47.5"
+					cy="48"
+					r="47.5"
+					fill="#FFF3E0"
+					initial={{ opacity: 0, scale: 0.5 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.5 }}
+				/>
+				<path
+					id="Vector 30"
+					d="M27.373 49.6102L43.4345 65.6716C43.875 66.1121 44.6067 66.047 44.9625 65.5356L70.0425 29.483"
+					stroke="#FF9501"
+					stroke-width="12"
+					stroke-linecap="round"
+				/>
+			</g>
+		</motion.svg>
+	);
+};
 
 const SignUpLayout = styled.section`
 	color: #fff;
@@ -34,112 +50,16 @@ const Title = styled.h3`
 	line-height: 150%; /* 36px */
 `;
 
-const BtnFull = styled.button`
-	width: 100%;
-`;
-
-const CustomTextField = withStyles({
-	root: {
-		'& label.Mui-focused': {
-			color: '#90908E'
-		},
-		'& .MuiInput-underline:after': {
-			borderBottomColor: '#FF9501'
-		},
-		'& .MuiInput-underline:before': {
-			borderBottomColor: '#90908E'
-		},
-		'& .MuiFormLabel-root': {
-			color: '#90908E'
-		},
-		'&.MuiFormControl-root': {
-			display: 'flex',
-			width: '100%'
-		},
-		'&': {
-			backgroundColor: 'transparent'
-		}
-	}
-})(TextField);
-
-export default function SignUp9() {
-	const navigate = useNavigate();
-	const [active, setActive] = useState(false);
-	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
-
-	const handleNextBtn = () => {
-		navigate('/sign-up-8');
-	};
-
-	const handleKeyword = (e) => {
-		setKeyword(e.target.value);
-	};
-
-	const [info, setInfo] = useState();
-	// const [map, setMap] = useState();
-
-	//--------------------------------------------------
-
-	// 입력 폼 변화 감지하여 입력 값 관리
-	const [Value, setValue] = useState('');
-	// 제출한 검색어 관리
-	const [Keyword, setKeyword] = useState('');
-	const [selectPlace, setSelectPlace] = useState('');
-
-	// 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
-	const keywordChange = (e) => {
-		e.preventDefault();
-		setValue(e.target.value);
-	};
-
-	// 제출한 검색어 state에 담아주는 함수
-	const submitKeyword = (e) => {
-		e.preventDefault();
-		setKeyword(Value);
-	};
-
-	// 검색어를 입력하지 않고 검색 버튼을 눌렀을 경우
-	const valueChecker = () => {
-		if (Value === '') {
-			alert('검색어를 입력해주세요.');
-		}
-	};
-
-	// const getSearchInfo = (title, info, gymAddress) => {
-
-	useEffect(() => {
-		if (userRegisterInfo.gym.address !== '') {
-			setActive(true);
-		}
-	}, [userRegisterInfo.gym.address]);
-
-	console.log(userRegisterInfo);
-
+export default function SignUp8() {
 	return (
-		<SignUpLayout className="flex flex-col justify-between">
-			<section>
-				<NavTop>회원가입</NavTop>
-				<Title>회원가입 완료!</Title>
-				<div className="mt-[32px]">
-					<div className="landing-page">
-						<section className="landing-page__inner">
-							<div className="search-form-container mb-2">
-								<form className="search-form" onSubmit={submitKeyword}>
-									<label htmlFor="place" className="flex items-end">
-										<div className="btn-box ml-2">
-											<input className="btn btn-primary btn-sm" type="submit" value="검색" onClick={valueChecker} />
-										</div>
-									</label>
-								</form>
-							</div>
-						</section>
-					</div>
+		<SignUpLayout>
+			<NavTop>모두의 대결</NavTop>
+			<section className="flex flex-col justify-center h-full">
+				<div className="flex justify-center">
+					<MyComponent />
 				</div>
-			</section>
-			<section>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
-					다음
-				</BtnFull>
+				<Title className="text-center">회원가입 완료!</Title>
+				<p className="text-center">지금 바로 시작 하세요!</p>
 			</section>
 		</SignUpLayout>
 	);
