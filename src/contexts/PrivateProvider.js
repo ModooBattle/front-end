@@ -19,7 +19,7 @@ function PrivateProvider() {
 		}
 		if (!accessToken) {
 			axios
-				.post('/user/access') //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
+				.post('https://121.140.7.121:1444/api/user/access') //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
 				.then((res) => {
 					setAccessToken(res.data.access_token); //엑세스토큰 저장
 					// setUserId(res.data.current_user); //사용자 id 저장
