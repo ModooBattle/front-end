@@ -15,24 +15,31 @@ export default function KakaoLogin() {
 
 	const kakaoLoginCode = async () => {
 		try {
-			await axios.post(`https://121.140.7.121:1444/api/user/login`, { code: AUTHORIZATION_CODE }).then((result) => {
-				const { status, data } = result;
-				console.log(status);
-				if (status === 200) {
-					console.log(data);
-					setAccessToken(data.access);
-					setUserInfo((prev) => ({ ...prev, username: data.username, current_location: data.current_location }));
-					navigate('/home'); // 404 에러남...ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
-					// setNickname(data.user.nickname);
-					// setUuid(data.user.uuid.split('-').join(''));
-					// setCurrentroom(data.user.uuid.split('-').join(''));
-				}
-				// else if (status === 201 || status === 206) {
-				// 	navigate('/nickname', { state: { user_uuid: data.user_uuid } });
-				// } else {
-				// 	navigate('/');
-				// }
-			});
+			await axios
+				.post(`https://121.140.7.121:1444/api/user/login`, {
+					code: AUTHORIZATION_CODE,
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				})
+				.then((result) => {
+					const { status, data } = result;
+					console.log(status);
+					if (status === 200) {
+						console.log(data);
+						setAccessToken(data.access);
+						setUserInfo((prev) => ({ ...prev, username: data.username, current_location: data.current_location }));
+						navigate('/home'); // 404 에러남...ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
+						// setNickname(data.user.nickname);
+						// setUuid(data.user.uuid.split('-').join(''));
+						// setCurrentroom(data.user.uuid.split('-').join(''));
+					}
+					// else if (status === 201 || status === 206) {
+					// 	navigate('/nickname', { state: { user_uuid: data.user_uuid } });
+					// } else {
+					// 	navigate('/');
+					// }
+				});
 		} catch (error) {
 			// 회원 가입 해야 될 때
 			if (error.response.status === 401) {

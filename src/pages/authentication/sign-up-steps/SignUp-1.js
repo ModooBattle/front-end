@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import { withStyles } from '@material-ui/core/styles';
 // third party - from validation
 import * as Yup from 'yup';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage, useFormikContext } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useNavigate } from 'react-router-dom';
@@ -67,9 +67,43 @@ export default function SignUp1() {
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 	const MySwal = withReactContent(Swal);
+	const [randomNickName, setRandomNickName] = useState('');
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-2');
+	};
+
+	const AutoSubmitToken = () => {
+		// Grab values and submitForm from context
+		const { values, submitForm } = useFormikContext();
+		console.log(values.username);
+		console.log(randomNickName !== '');
+		useEffect(() => {
+			if (randomNickName !== '') {
+				values.username = randomNickName;
+			}
+		}, [randomNickName]);
+		// useEffect(() => {
+		// 	// Submit the form imperatively as an effect as soon as form values.token are 6 digits long
+		// 	if (values.token.length === 6) {
+		// 		submitForm();
+		// 	}
+		// }, [values, submitForm]);
+		// return null;
+	};
+
+	const getRandomNickname = async () => {
+		try {
+			await axios.get(`https://121.140.7.121:1444/api/user/random-nickname`).then((result) => {
+				const { status, data } = result;
+				if (status === 200) {
+					testFormik();
+					setRandomNickName(data.nickname);
+				}
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	return (
@@ -134,7 +168,7 @@ export default function SignUp1() {
 							<section>
 								<form onSubmit={handleSubmit} className="flex items-end mt-2">
 									<CustomTextField
-										id="nicname"
+										id="nickname"
 										name="username"
 										label="닉네임"
 										variant="standard"
@@ -143,9 +177,13 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
+									<button className="btn btn-secondary" type="button" onClick={getRandomNickname}>
+										랜덤 닉네임 생성
+									</button>
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>
+									<AutoSubmitToken />
 								</form>
 								<ErrorMessage name="username" component="div" className="mt-2 text-error" />
 							</section>
