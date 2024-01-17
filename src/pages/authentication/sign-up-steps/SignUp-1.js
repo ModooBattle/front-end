@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
@@ -73,37 +73,37 @@ export default function SignUp1() {
 		navigate('/sign-up-2');
 	};
 
-	const AutoSubmitToken = () => {
-		// Grab values and submitForm from context
-		const { values, submitForm } = useFormikContext();
-		console.log(values.username);
-		console.log(randomNickName !== '');
-		useEffect(() => {
-			if (randomNickName !== '') {
-				values.username = randomNickName;
-			}
-		}, [randomNickName]);
-		// useEffect(() => {
-		// 	// Submit the form imperatively as an effect as soon as form values.token are 6 digits long
-		// 	if (values.token.length === 6) {
-		// 		submitForm();
-		// 	}
-		// }, [values, submitForm]);
-		// return null;
-	};
+	const RandomNicknameButton = () => {
+		const { values } = useFormikContext();
 
-	const getRandomNickname = async () => {
-		try {
-			await axios.get(`https://121.140.7.121:1444/api/user/random-nickname`).then((result) => {
-				const { status, data } = result;
-				if (status === 200) {
-					testFormik();
-					setRandomNickName(data.nickname);
-				}
-			});
-		} catch (e) {
-			console.log(e);
-		}
+		const getRandomNickname = async () => {
+			// Do something with formikContext...
+			try {
+				await axios.get(`https://121.140.7.121:1444/api/user/random-nickname`).then((result) => {
+					const { status, data } = result;
+					if (status === 200) {
+						console.log(typeof values.username);
+						console.log(values);
+						console.log(data.nickname);
+						setRandomNickName(data.nickname);
+						// setRandomNickName(data.nickname);
+						values.username = data.nickname;
+					}
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		};
+
+		useEffect(() => {
+			values.username = randomNickName;
+		}, [randomNickName]);
+
+		return (
+			<button type="button" onClick={getRandomNickname}>
+				Get Random Nickname
+			</button>
+		);
 	};
 
 	return (
@@ -177,13 +177,13 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
-									<button className="btn btn-secondary" type="button" onClick={getRandomNickname}>
+									{/* <button className="btn btn-secondary" type="button" onClick={getRandomNickname}>
 										랜덤 닉네임 생성
-									</button>
+									</button> */}
+									<RandomNicknameButton />
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>
-									<AutoSubmitToken />
 								</form>
 								<ErrorMessage name="username" component="div" className="mt-2 text-error" />
 							</section>
