@@ -10,7 +10,7 @@ import App from './App';
 
 // 서버 올릴 때 앞주소 맟추기
 // const baseURL = window.location.host;
-axios.defaults.baseURL = 'https://121.140.7.121:1444/api/'; //local-전용
+axios.defaults.baseURL = '/api/'; //local-전용
 // axios.defaults.baseURL = '/edu_api/v1'; //교육
 // axios.defaults.baseURL = 'https://' + baseURL + '/api/v1';
 axios.defaults.withCredentials = true;

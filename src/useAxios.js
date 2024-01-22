@@ -15,6 +15,8 @@ export default function useAxios() {
 		}
 	});
 
+	console.log(accessToken);
+
 	privateAxios.interceptors.response.use(
 		function (response) {
 			return response;
@@ -39,7 +41,7 @@ export default function useAxios() {
 	const refreshAccessToken = async () => {
 		let access_token = '';
 		await axios
-			.post('https://121.140.7.121:1444/api/user/access')
+			.post('/user/access')
 			.then((res) => {
 				console.log(res);
 				setAccessToken(res.data.access_token);
