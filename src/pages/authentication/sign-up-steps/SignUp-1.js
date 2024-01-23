@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import TextField from '@mui/material/TextField';
@@ -44,7 +44,7 @@ const CustomTextField = withStyles({
 			color: '#90908E'
 		},
 		'& .MuiInput-underline:after': {
-			borderBottomColor: '#FF9501'
+			borderBottomColor: '#7480FF'
 		},
 		'& .MuiInput-underline:before': {
 			borderBottomColor: '#90908E'
@@ -65,7 +65,7 @@ const CustomTextField = withStyles({
 export default function SignUp1() {
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
-	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+	const setUserRegisterInfo = useSetRecoilState(userRegisterInfoAtom);
 	const MySwal = withReactContent(Swal);
 	const [randomNickName, setRandomNickName] = useState('');
 
@@ -82,12 +82,7 @@ export default function SignUp1() {
 				await axios.get(`https://121.140.7.121:1444/api/user/random-nickname`).then((result) => {
 					const { status, data } = result;
 					if (status === 200) {
-						console.log(typeof values.username);
-						console.log(values);
-						console.log(data.nickname);
 						setRandomNickName(data.nickname);
-						// setRandomNickName(data.nickname);
-						values.username = data.nickname;
 					}
 				});
 			} catch (e) {
@@ -100,7 +95,7 @@ export default function SignUp1() {
 		}, [randomNickName]);
 
 		return (
-			<button type="button" onClick={getRandomNickname} className="btn btn-secondary">
+			<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
 				랜덤 닉네임 생성
 			</button>
 		);
@@ -130,7 +125,7 @@ export default function SignUp1() {
 						onSubmit={async (values) => {
 							try {
 								await axios
-									.get(`https://121.140.7.121:1444/api/user/signup`, {
+									.get(`user/signup`, {
 										params: {
 											username: values.username
 										}

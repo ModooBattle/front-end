@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
-import { ReactComponent as WomanDefault } from '../../../asset/images/woman-default.svg';
-import { ReactComponent as ManDefault } from '../../../asset/images/man-default-2.svg';
+import { ReactComponent as WomanDefault } from '../../../asset/images/female.svg';
+import { ReactComponent as ManDefault } from '../../../asset/images/male.svg';
 
 const SignUpLayout = styled.section`
 	color: #fff;
@@ -59,19 +59,19 @@ export default function SignUp2() {
 				<Title>성별을 알려주세요</Title>
 				<section className="radio-pick-gender flex mt-[32px]">
 					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
-						<input type="radio" name="gender" value="F" />
-						<WomanDefault />
-						<h3 className="text-center text-xl mt-[12px]">여성</h3>
-					</label>
-					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
 						<input type="radio" name="gender" value="M" />
 						<ManDefault />
 						<h3 className="text-center text-xl mt-[12px]">남성</h3>
 					</label>
+					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>
+						<input type="radio" name="gender" value="F" />
+						<WomanDefault />
+						<h3 className="text-center text-xl mt-[12px]">여성</h3>
+					</label>
 				</section>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
+				<BtnFull className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</BtnFull>
 			</section>

@@ -78,7 +78,7 @@ export default function SignUp3() {
 				</section>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
+				<BtnFull className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</BtnFull>
 			</section>

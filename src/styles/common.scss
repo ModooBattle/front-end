@@ -49,7 +49,7 @@ input.Mui-disabled:disabled {
 
 /* CHECKED STYLES */
 .radio-pick-gender [type='radio']:checked + svg {
-	outline: 2px solid #ff9501;
+	outline: 2px solid #7480ff;
 	border-radius: 50%;
 }
 
@@ -71,9 +71,9 @@ input.Mui-disabled:disabled {
 }
 
 .radio-pick-age label:has([type='radio']:checked) {
-	outline: 2px solid #ff9501;
+	outline: 2px solid #7480ff;
 	background-color: #fff3e0;
-	color: #ff9501;
+	color: #7480ff;
 }
 
 .radio-pick-age label:has([type='radio']:checked)::after {
@@ -104,9 +104,9 @@ input.Mui-disabled:disabled {
 }
 
 .radio-pick-sports label:has([type='radio']:checked) {
-	outline: 2px solid #ff9501;
+	outline: 2px solid #7480ff;
 	background-color: #fff3e0;
-	color: #ff9501;
+	color: #7480ff;
 }
 
 .radio-pick-sports label:has([type='radio']:checked)::after {

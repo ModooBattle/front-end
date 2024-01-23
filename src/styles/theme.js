@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 // 반응형 디자인을 위한 픽셀 컨버팅 함수
 const pixelToRem = (size) => `${size / 16}rem`;
 
@@ -17,7 +15,8 @@ const colors = {
 	green: '#3cb46e',
 	blue: '#000080',
 	// -------------------------
-	bgBlack: '#151517'
+	bgBlack: '#151517',
+	primary: '#FF52D9'
 };
 
 // 자주 사용하는 스타일 속성을 theme으로 만들어보자.

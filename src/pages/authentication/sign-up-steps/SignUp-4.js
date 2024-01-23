@@ -48,7 +48,7 @@ export default function SignUp4() {
 
 	const getSportsList = async () => {
 		try {
-			await axios.get(`https://121.140.7.121:1444/api/sport/sports/list`).then((result) => {
+			await axios.get(`sport/sports/list`).then((result) => {
 				setSportsList(result.data);
 			});
 		} catch (error) {
@@ -86,7 +86,7 @@ export default function SignUp4() {
 					{sportsList.map((data, index) => (
 						<CustomLabel key={index} className="basis-1/2 flex flex-col items-center" name="age" onChange={handleSelectSports}>
 							<input type="radio" name="age" value={data.id} />
-							<h3 className="text-xl w-full w-full h-full">{data.name}</h3>
+							<h3 className="text-xl w-full h-full">{data.name}</h3>
 							<div className="flex justify-end w-full">
 								<Boxing />
 							</div>
@@ -95,7 +95,7 @@ export default function SignUp4() {
 				</section>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
+				<BtnFull className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</BtnFull>
 			</section>
