@@ -5,19 +5,10 @@ import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
-import { ReactComponent as Boxing } from '../../../asset/images/boxing.svg';
-const SignUpLayout = styled.section`
-	color: #fff;
-	height: 100%;
-`;
+import NavTop from '../../../components/layout/NavTop';
 
-const NavTop = styled.section`
-	padding: 16px 24px;
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1 0 0;
+const SignUpLayout = styled.section`
+	height: 100%;
 `;
 
 const Title = styled.h3`
@@ -35,7 +26,7 @@ const BtnFull = styled.button`
 const CustomLabel = styled.label`
 	cursor: pointer;
 	padding: 16px;
-	background-color: #373735;
+	background-color: #14191e;
 	border-radius: 8px;
 	flex-basis: 50%;
 	min-height: 118px;
@@ -45,6 +36,8 @@ export default function SignUp4() {
 	const [active, setActive] = useState(false);
 	const [sportsList, setSportsList] = useState([]);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
+
+	const sportsIcons = ['/images/icons/boxing.svg', '/images/icons/jujitsu.svg', '/images/icons/kickboxing.svg'];
 
 	const getSportsList = async () => {
 		try {
@@ -74,13 +67,11 @@ export default function SignUp4() {
 		}
 	}, [userRegisterInfo.gym.sport]);
 
-	console.log(userRegisterInfo.gym);
-	console.log(userRegisterInfo.gym.sport);
-
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
-				<NavTop>회원가입</NavTop>
+				<NavTop title="회원가입" />
+
 				<Title>대결 하려는 종목이 무엇인가요?</Title>
 				<section className="radio-pick-sports grid grid-cols-2 gap-[24px] mt-[32px]">
 					{sportsList.map((data, index) => (
@@ -88,7 +79,8 @@ export default function SignUp4() {
 							<input type="radio" name="age" value={data.id} />
 							<h3 className="text-xl w-full h-full">{data.name}</h3>
 							<div className="flex justify-end w-full">
-								<Boxing />
+								{/* <Boxing /> */}
+								<img src={sportsIcons[index]} alt={data.name} className={'sport-' + index} />
 							</div>
 						</CustomLabel>
 					))}

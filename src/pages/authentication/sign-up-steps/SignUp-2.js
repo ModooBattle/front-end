@@ -6,19 +6,11 @@ import { useNavigate } from 'react-router-dom';
 //
 import { ReactComponent as WomanDefault } from '../../../asset/images/female.svg';
 import { ReactComponent as ManDefault } from '../../../asset/images/male.svg';
+//
+import NavTop from '../../../components/layout/NavTop';
 
 const SignUpLayout = styled.section`
-	color: #fff;
 	height: 100%;
-`;
-
-const NavTop = styled.section`
-	padding: 16px 24px;
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1 0 0;
 `;
 
 const Title = styled.h3`
@@ -55,7 +47,7 @@ export default function SignUp2() {
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
-				<NavTop>회원가입</NavTop>
+				<NavTop title="회원가입" />
 				<Title>성별을 알려주세요</Title>
 				<section className="radio-pick-gender flex mt-[32px]">
 					<label className="basis-1/2 flex flex-col items-center" name="gender" onChange={handleSelectFemale}>

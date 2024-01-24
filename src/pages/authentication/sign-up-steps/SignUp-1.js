@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
 import { styled } from 'styled-components';
@@ -10,20 +11,11 @@ import * as Yup from 'yup';
 import { Formik, ErrorMessage, useFormikContext } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { useNavigate } from 'react-router-dom';
+//
+import NavTop from '../../../components/layout/NavTop';
 
 const SignUpLayout = styled.section`
-	color: #fff;
 	height: 100%;
-`;
-
-const NavTop = styled.section`
-	padding: 16px 24px;
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1 0 0;
 `;
 
 const Title = styled.h3`
@@ -73,38 +65,51 @@ export default function SignUp1() {
 		navigate('/sign-up-2');
 	};
 
-	const RandomNicknameButton = () => {
-		const { values } = useFormikContext();
-
-		const getRandomNickname = async () => {
-			// Do something with formikContext...
-			try {
-				await axios.get(`https://121.140.7.121:1444/api/user/random-nickname`).then((result) => {
-					const { status, data } = result;
-					if (status === 200) {
-						setRandomNickName(data.nickname);
-					}
-				});
-			} catch (e) {
-				console.log(e);
-			}
-		};
-
-		useEffect(() => {
-			values.username = randomNickName;
-		}, [randomNickName]);
-
-		return (
-			<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
-				랜덤 닉네임 생성
-			</button>
-		);
+	const getRandomNickname = async () => {
+		try {
+			await axios.get(`user/random-nickname`).then((result) => {
+				const { status, data } = result;
+				if (status === 200) {
+					setRandomNickName(data.nickname);
+				}
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	};
+
+	// const RandomNicknameButton = ({ values }) => {
+	// 	useEffect(() => {
+	// 		values.username = randomNickName;
+	// 	}, [randomNickName]);
+
+	// 	return (
+	// 		<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
+	// 			랜덤 닉네임 생성
+	// 		</button>
+	// 	);
+	// };
+
+	const RandomNicknameButton = useCallback(
+		({ values }) => {
+			values.username = randomNickName;
+			return (
+				<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
+					랜덤 닉네임 생성
+				</button>
+			);
+		},
+		[randomNickName]
+	);
+
+	// useEffect(() => {
+	// 	getRandomNickname();
+	// }, []);
 
 	return (
 		<SignUpLayout className="flex flex-col justify-between">
 			<section>
-				<NavTop>회원가입</NavTop>
+				<NavTop title="회원가입" />
 				<Title>
 					안녕하세요!
 					<br />
@@ -172,7 +177,7 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
-									<RandomNicknameButton />
+									<RandomNicknameButton values={values} />
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>

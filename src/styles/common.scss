@@ -1,9 +1,9 @@
 body {
 	margin-bottom: 0 !important;
+	color: #a6adbb;
 }
 
 button:disabled {
-	background-color: #373735 !important;
 	color: #686866 !important;
 }
 
@@ -72,7 +72,6 @@ input.Mui-disabled:disabled {
 
 .radio-pick-age label:has([type='radio']:checked) {
 	outline: 2px solid #7480ff;
-	background-color: #fff3e0;
 	color: #7480ff;
 }
 
@@ -105,7 +104,6 @@ input.Mui-disabled:disabled {
 
 .radio-pick-sports label:has([type='radio']:checked) {
 	outline: 2px solid #7480ff;
-	background-color: #fff3e0;
 	color: #7480ff;
 }
 
@@ -117,6 +115,16 @@ input.Mui-disabled:disabled {
 	position: absolute;
 	right: 16px;
 	top: 13px;
+}
+
+.sport-0 {
+	width: 50px;
+}
+.sport-1 {
+	width: 55px;
+}
+.sport-2 {
+	width: 55px;
 }
 
 /****************** */

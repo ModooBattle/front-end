@@ -15,7 +15,7 @@ const colors = {
 	green: '#3cb46e',
 	blue: '#000080',
 	// -------------------------
-	bgBlack: '#151517',
+	bgBlack: '#1D232A',
 	primary: '#FF52D9'
 };
 
