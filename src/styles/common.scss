@@ -105,6 +105,10 @@ input.Mui-disabled:disabled {
 .radio-pick-sports label:has([type='radio']:checked) {
 	outline: 2px solid #7480ff;
 	color: #7480ff;
+
+	img {
+		filter: invert(15%) sepia(84%) saturate(2670%) hue-rotate(231deg) brightness(90%) contrast(90%);
+	}
 }
 
 .radio-pick-sports label:has([type='radio']:checked)::after {
@@ -127,7 +131,7 @@ input.Mui-disabled:disabled {
 	width: 55px;
 }
 
-/****************** */
+/****************** 체육관 설정 ************/
 .custom-select::after {
 	content: '';
 	background-image: url('../asset/icons/arrow-select.svg');
@@ -136,8 +140,17 @@ input.Mui-disabled:disabled {
 }
 
 .map-container {
-	height: 300px;
 	color: #333;
+	display: flex;
+
+	#search-result {
+		width: 30%;
+	}
+
+	#map {
+		width: 70%;
+		height: 300px;
+	}
 }
 
 .info {
@@ -153,6 +166,8 @@ input.Mui-disabled:disabled {
 }
 
 ul#places-list {
+	height: 300px;
+	overflow-y: scroll;
 	> li {
 		padding: 6px;
 		.info-item {

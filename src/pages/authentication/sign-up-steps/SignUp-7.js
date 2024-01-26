@@ -1,68 +1,14 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import useAxios from '../../../useAxios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom, accessTokenAtom, userInfoAtom } from '../../../atom';
-import { styled } from 'styled-components';
-import TextField from '@mui/material/TextField';
-import { withStyles } from '@material-ui/core/styles';
-
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import { useNavigate } from 'react-router-dom';
-
-import TestMap from '../KakaoMap';
-import KakaoLogin from '../KakaoLogin';
-
-const SignUpLayout = styled.section`
-	color: #fff;
-	height: 100%;
-`;
-
-const NavTop = styled.section`
-	padding: 16px 24px;
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1 0 0;
-`;
-
-const Title = styled.h3`
-	padding-top: 44px;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 150%; /* 36px */
-`;
-
-const BtnFull = styled.button`
-	width: 100%;
-`;
-
-const CustomTextField = withStyles({
-	root: {
-		'& label.Mui-focused': {
-			color: '#90908E'
-		},
-		'& .MuiInput-underline:after': {
-			borderBottomColor: '#FF9501'
-		},
-		'& .MuiInput-underline:before': {
-			borderBottomColor: '#90908E'
-		},
-		'& .MuiFormLabel-root': {
-			color: '#90908E'
-		},
-		'&.MuiFormControl-root': {
-			display: 'flex',
-			width: '100%'
-		},
-		'&': {
-			backgroundColor: 'transparent'
-		}
-	}
-})(TextField);
+import KaKaoMap from '../KakaoMap';
+//
+import NavTop from '../../../components/layout/NavTop';
+import CustomTextField from '../../../components/form/CustomTextField';
+import Title from '../../../components/typography/Title';
 
 export default function SignUp7() {
 	const navigate = useNavigate();
@@ -71,15 +17,6 @@ export default function SignUp7() {
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-
-	const handleKeyword = (e) => {
-		setKeyword(e.target.value);
-	};
-
-	const [info, setInfo] = useState();
-	// const [map, setMap] = useState();
-
-	//--------------------------------------------------
 
 	// 입력 폼 변화 감지하여 입력 값 관리
 	const [Value, setValue] = useState('');
@@ -106,7 +43,6 @@ export default function SignUp7() {
 		}
 	};
 
-	// const getSearchInfo = (title, info, gymAddress) => {
 	const getSearchInfo = ({ title, info, gymAddress }) => {
 		setSelectPlace(title);
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
@@ -121,13 +57,14 @@ export default function SignUp7() {
 		}
 	}, [userRegisterInfo.gym.address]);
 
-	console.log(userRegisterInfo);
+	// console.log(userRegisterInfo);
 
 	const signUp = async () => {
 		try {
-			await axios.post(`https://121.140.7.121:1444/api/user/signup`, userRegisterInfo).then((result) => {
+			await pAxios.post(`user/signup`, userRegisterInfo).then((result) => {
 				if (result.status === 200) {
 					console.log(result.data);
+					console.log(result.data.access);
 					setAccessToken(result.data.access);
 					setUserInfo((prev) => ({ ...prev, username: result.data.username, current_location: result.data.current_location }));
 					navigate('/sign-up-8');
@@ -143,15 +80,15 @@ export default function SignUp7() {
 	};
 
 	return (
-		<SignUpLayout className="flex flex-col justify-between">
+		<div className="flex flex-col justify-between h-full">
 			<section>
-				<NavTop>회원가입</NavTop>
+				<NavTop title="회원가입" />
 				<Title>
 					거의 다 왔어요!
 					<br />
 					이용 하시는 체육관을 선택 해 주세요!
 				</Title>
-				<div className="mt-[32px]">
+				<div className="mt-[32px] mb-2">
 					<div className="landing-page">
 						<section className="landing-page__inner">
 							<div className="search-form-container mb-2">
@@ -175,12 +112,10 @@ export default function SignUp7() {
 								</form>
 							</div>
 							{/* 제출한 검색어 넘기기 */}
-							<TestMap searchKeyword={Keyword} getSearchInfo={getSearchInfo} />
+							<KaKaoMap searchKeyword={Keyword} getSearchInfo={getSearchInfo} />
 						</section>
 					</div>
 				</div>
-			</section>
-			<section>
 				<CustomTextField
 					id="movie-title"
 					name="place"
@@ -188,12 +123,15 @@ export default function SignUp7() {
 					variant="standard"
 					value={selectPlace}
 					inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
+					disabled
 					required
 				/>
-				<BtnFull className="btn btn-primary" disabled={!active} onClick={signUp}>
-					다음
-				</BtnFull>
 			</section>
-		</SignUpLayout>
+			<section>
+				<button className="btn btn-block btn-primary" disabled={!active} onClick={signUp}>
+					다음
+				</button>
+			</section>
+		</div>
 	);
 }

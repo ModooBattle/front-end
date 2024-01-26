@@ -1,113 +1,53 @@
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
-import { styled } from 'styled-components';
-import TextField from '@mui/material/TextField';
-import { withStyles } from '@material-ui/core/styles';
+import useAxios from '../../../useAxios';
 // third party - from validation
 import * as Yup from 'yup';
-import { Formik, ErrorMessage, useFormikContext } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 //
 import NavTop from '../../../components/layout/NavTop';
-
-const SignUpLayout = styled.section`
-	height: 100%;
-`;
-
-const Title = styled.h3`
-	padding-top: 44px;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 150%; /* 36px */
-`;
-
-const BtnFull = styled.button`
-	width: 100%;
-`;
-
-const CustomTextField = withStyles({
-	root: {
-		'& label.Mui-focused': {
-			color: '#90908E'
-		},
-		'& .MuiInput-underline:after': {
-			borderBottomColor: '#7480FF'
-		},
-		'& .MuiInput-underline:before': {
-			borderBottomColor: '#90908E'
-		},
-		'& .MuiFormLabel-root': {
-			color: '#90908E'
-		},
-		'&.MuiFormControl-root': {
-			display: 'flex',
-			width: '100%'
-		},
-		'&': {
-			backgroundColor: 'transparent'
-		}
-	}
-})(TextField);
+import CustomTextField from '../../../components/form/CustomTextField';
+import Title from '../../../components/typography/Title';
 
 export default function SignUp1() {
+	const pAxios = useAxios();
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const setUserRegisterInfo = useSetRecoilState(userRegisterInfoAtom);
 	const MySwal = withReactContent(Swal);
-	const [randomNickName, setRandomNickName] = useState('');
 
 	const handleNextBtn = () => {
 		navigate('/sign-up-2');
 	};
 
-	const getRandomNickname = async () => {
-		try {
-			await axios.get(`user/random-nickname`).then((result) => {
-				const { status, data } = result;
-				if (status === 200) {
-					setRandomNickName(data.nickname);
-				}
-			});
-		} catch (e) {
-			console.log(e);
-		}
+	const RandomNicknameButton = ({ setFieldValue }) => {
+		const getRandomNickname = async () => {
+			try {
+				await pAxios.get(`user/random-nickname`).then((result) => {
+					const { status, data } = result;
+					if (status === 200) {
+						setFieldValue('username', data.nickname);
+					}
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		};
+
+		return (
+			<button type="button" onClick={getRandomNickname} className="btn btn-neutral ml-2" disabled={active}>
+				랜덤 닉네임 생성
+			</button>
+		);
 	};
 
-	// const RandomNicknameButton = ({ values }) => {
-	// 	useEffect(() => {
-	// 		values.username = randomNickName;
-	// 	}, [randomNickName]);
-
-	// 	return (
-	// 		<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
-	// 			랜덤 닉네임 생성
-	// 		</button>
-	// 	);
-	// };
-
-	const RandomNicknameButton = useCallback(
-		({ values }) => {
-			values.username = randomNickName;
-			return (
-				<button type="button" onClick={getRandomNickname} className="btn btn-neutral" disabled={active}>
-					랜덤 닉네임 생성
-				</button>
-			);
-		},
-		[randomNickName]
-	);
-
-	// useEffect(() => {
-	// 	getRandomNickname();
-	// }, []);
-
 	return (
-		<SignUpLayout className="flex flex-col justify-between">
+		<div className="flex flex-col justify-between h-full">
 			<section>
 				<NavTop title="회원가입" />
 				<Title>
@@ -162,9 +102,8 @@ export default function SignUp1() {
 								}
 							}
 						}}
-						// enableReinitialize
 					>
-						{({ values, handleChange, handleSubmit, isSubmitting }) => (
+						{({ values, handleChange, handleSubmit, isSubmitting, setFieldValue }) => (
 							<section>
 								<form onSubmit={handleSubmit} className="flex items-end mt-2">
 									<CustomTextField
@@ -177,7 +116,7 @@ export default function SignUp1() {
 										disabled={active}
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
-									<RandomNicknameButton values={values} />
+									<RandomNicknameButton setFieldValue={setFieldValue} />
 									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>
@@ -189,10 +128,10 @@ export default function SignUp1() {
 				</div>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary disabled:#fff" disabled={!active} onClick={handleNextBtn}>
+				<button className="btn btn-block btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
-				</BtnFull>
+				</button>
 			</section>
-		</SignUpLayout>
+		</div>
 	);
 }

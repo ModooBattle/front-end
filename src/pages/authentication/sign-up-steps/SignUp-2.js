@@ -1,29 +1,13 @@
 import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
 import { useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
 import { ReactComponent as WomanDefault } from '../../../asset/images/female.svg';
 import { ReactComponent as ManDefault } from '../../../asset/images/male.svg';
 //
 import NavTop from '../../../components/layout/NavTop';
-
-const SignUpLayout = styled.section`
-	height: 100%;
-`;
-
-const Title = styled.h3`
-	padding-top: 44px;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 150%; /* 36px */
-`;
-
-const BtnFull = styled.button`
-	width: 100%;
-`;
+import Title from '../../../components/typography/Title';
 
 export default function SignUp2() {
 	const navigate = useNavigate();
@@ -45,7 +29,7 @@ export default function SignUp2() {
 	}, [userRegisterInfo.gender]);
 
 	return (
-		<SignUpLayout className="flex flex-col justify-between">
+		<div className="flex flex-col justify-between h-full">
 			<section>
 				<NavTop title="회원가입" />
 				<Title>성별을 알려주세요</Title>
@@ -63,10 +47,10 @@ export default function SignUp2() {
 				</section>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
+				<button className="btn btn-primary btn-block" disabled={!active} onClick={handleNextBtn}>
 					다음
-				</BtnFull>
+				</button>
 			</section>
-		</SignUpLayout>
+		</div>
 	);
 }

@@ -1,33 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
-import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 //
 import NavTop from '../../../components/layout/NavTop';
-
-const SignUpLayout = styled.section`
-	height: 100%;
-`;
-
-const Title = styled.h3`
-	padding-top: 44px;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 150%; /* 36px */
-`;
-
-const BtnFull = styled.button`
-	width: 100%;
-`;
-
-const CustomLabel = styled.label`
-	cursor: pointer;
-	padding: 16px;
-	background-color: #14191e;
-	border-radius: 8px;
-`;
+import Title from '../../../components/typography/Title';
+import CustomLabel from '../../../components/form/CustomLabel';
 
 export default function SignUp3() {
 	const navigate = useNavigate();
@@ -49,7 +27,7 @@ export default function SignUp3() {
 	}, [userRegisterInfo.age]);
 
 	return (
-		<SignUpLayout className="flex flex-col justify-between">
+		<div className="flex flex-col justify-between h-full">
 			<section>
 				<NavTop title="회원가입" />
 				<Title>연령대를 알려주세요</Title>
@@ -70,10 +48,10 @@ export default function SignUp3() {
 				</section>
 			</section>
 			<section>
-				<BtnFull className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
+				<button className="btn btn-block btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
-				</BtnFull>
+				</button>
 			</section>
-		</SignUpLayout>
+		</div>
 	);
 }

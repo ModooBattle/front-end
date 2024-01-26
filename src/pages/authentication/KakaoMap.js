@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-// import { propsType } from '../LandingPage';
+import React, { useEffect, useState, useRef } from 'react';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
@@ -12,6 +11,7 @@ const KakaoMap = (props) => {
 	});
 	// 마커를 담는 배열
 	let markers = [];
+	/////////////////////////
 
 	// 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
 	useEffect(() => {
@@ -38,7 +38,7 @@ const KakaoMap = (props) => {
 			let keyword = props.searchKeyword;
 
 			if (!keyword.replace(/^\s+|\s+$/g, '')) {
-				console.log('키워드를 입력해주세요!');
+				// console.log('키워드를 입력해주세요!');
 				return false;
 			}
 
@@ -63,6 +63,7 @@ const KakaoMap = (props) => {
 				return;
 			}
 		}
+
 		// 검색 결과 목록과 마커를 표출하는 함수
 		function displayPlaces(places) {
 			const listEl = document.getElementById('places-list'),
@@ -86,9 +87,8 @@ const KakaoMap = (props) => {
 				// LatLngBounds 객체에 좌표를 추가
 				bounds.extend(placePosition);
 
-				// 마커와 검색결과 항목에 mouseover 했을때
+				// 마커와 검색결과 항목에 click 했을때
 				// 해당 장소에 인포윈도우에 장소명을 표시
-				// mouseout 했을 때는 인포윈도우를 닫기
 				(function (marker, title) {
 					// 마커 클릭 시
 					kakao.maps.event.addListener(marker, 'click', function () {
@@ -105,21 +105,6 @@ const KakaoMap = (props) => {
 						setSearchedInfo((prev) => ({ ...prev, title: title }));
 						setSearchedInfo((prev) => ({ ...prev, info: position }));
 					};
-					// kakao.maps.event.addListener(marker, 'mouseover', function () {
-					// 	displayInfowindow(marker, title);
-					// });
-
-					// kakao.maps.event.addListener(marker, 'mouseout', function () {
-					// 	infowindow.close();
-					// });
-
-					// itemEl.onmouseover = function () {
-					// 	displayInfowindow(marker, title);
-					// };
-
-					// itemEl.onmouseout = function () {
-					// 	infowindow.close();
-					// };
 				})(marker, places[i].place_name);
 
 				fragment.appendChild(itemEl);
@@ -135,10 +120,11 @@ const KakaoMap = (props) => {
 			map.setBounds(bounds);
 		}
 
+		// const el = useRef(null)
+
 		// 검색결과 항목을 Element로 반환하는 함수
 		function getListItem(index, places) {
 			function handleClick(e) {
-				console.log();
 				// childNodes에서 특정 클래스를 가진 노드 찾기
 				for (let i = 0; i < e.target.parentNode.childNodes.length; i++) {
 					var childNode = e.target.parentNode.childNodes[i];
@@ -269,12 +255,11 @@ const KakaoMap = (props) => {
 		props.getSearchInfo(searchedInfo);
 	}, [searchedInfo]);
 
-	console.log(searchedInfo);
+	// console.log(searchedInfo);
 
 	return (
-		<div className="map-container flex height">
-			<div id="map" className="w-4/6" />
-			<div id="search-result" className="w-2/6">
+		<section className="map-container">
+			<article id="search-result">
 				<p className="result-text">
 					<span className="result-keyword something">{props.searchKeyword}</span>
 					검색 결과
@@ -283,8 +268,10 @@ const KakaoMap = (props) => {
 					<ul id="places-list" />
 				</div>
 				<div id="pagination" />
-			</div>
-		</div>
+			</article>
+
+			<article id="map" />
+		</section>
 	);
 };
 

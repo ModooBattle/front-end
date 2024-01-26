@@ -15,8 +15,6 @@ export default function useAxios() {
 		}
 	});
 
-	console.log(accessToken);
-
 	privateAxios.interceptors.response.use(
 		function (response) {
 			return response;

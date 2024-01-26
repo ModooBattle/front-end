@@ -11,14 +11,7 @@ function PrivateProvider() {
 	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
 	const isUserActive = useRecoilValue(userInfoAtom);
 
-	console.log(accessToken);
-	console.log(!accessToken);
-	console.log(isUserActive);
-
 	useEffect(() => {
-		// if (isUserActive.username === '') {
-		// 	navigate('/login');
-		// }
 		if (!accessToken) {
 			axios
 				.post('/user/access', {}) //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
