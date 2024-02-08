@@ -19,12 +19,6 @@ export const userRegisterInfoAtom = atom({
 	}
 });
 
-// authorization
-export const accessTokenAtom = atom({
-	key: 'accessToken',
-	default: null
-});
-
 export const userInfoAtom = atom({
 	key: 'userInfo',
 	default: { access: '', username: '', current_location: '' }

@@ -39,7 +39,7 @@ export default function SignUp1() {
 		};
 
 		return (
-			<button type="button" onClick={getRandomNickname} className="btn btn-neutral ml-2" disabled={active}>
+			<button type="button" onClick={getRandomNickname} className="btn btn-sm btn-neutral ml-2" disabled={active}>
 				랜덤 닉네임 생성
 			</button>
 		);
@@ -116,7 +116,7 @@ export default function SignUp1() {
 										inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
 									/>
 									<RandomNicknameButton setFieldValue={setFieldValue} />
-									<button className="btn btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
+									<button className="btn btn-sm btn-primary ml-2" type="submit" disabled={active ? active : isSubmitting}>
 										중복검사
 									</button>
 								</form>

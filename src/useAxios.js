@@ -1,19 +1,18 @@
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { accessTokenAtom, userInfoAtom } from './atom';
+import { userInfoAtom } from './atom';
 import { useNavigate } from 'react-router-dom';
 
 export default function useAxios() {
-	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
 	const navigate = useNavigate();
 
-	console.log(accessToken);
+	console.log(userInfo);
 
 	const privateAxios = axios.create({
 		headers: {
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer ${userInfo.access}`
 		}
 	});
 
@@ -43,11 +42,16 @@ export default function useAxios() {
 		await axios
 			.post('/user/access')
 			.then((res) => {
-				console.log(res);
-				setAccessToken(res.data.access_token);
-				setUserInfo((prev) => ({ ...prev, username: res.data.username, current_location: res.data.current_location }));
+				// console.log(res);
+				// setAccessToken(res.data.access_token);
+				setUserInfo((prev) => ({
+					...prev,
+					access: res.data.access,
+					username: res.data.username,
+					current_location: res.data.current_location
+				}));
 
-				access_token = res.data.access_token;
+				access_token = res.data.access;
 			})
 			.catch((e) => {
 				console.log(e);
@@ -55,8 +59,6 @@ export default function useAxios() {
 			});
 		return access_token;
 	};
-
-	console.log(accessToken);
 
 	return privateAxios;
 }

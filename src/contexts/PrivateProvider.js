@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenAtom, userInfoAtom } from '../atom';
+import { userInfoAtom } from '../atom';
 import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 //sweetalert2
@@ -8,17 +8,20 @@ import Swal from 'sweetalert2';
 
 function PrivateProvider() {
 	const navigate = useNavigate();
-	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
-	const isUserActive = useRecoilValue(userInfoAtom);
+	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
 	useEffect(() => {
-		if (!accessToken) {
+		if (!userInfo.access) {
 			axios
 				.post('/user/access', {}) //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
 				.then((res) => {
 					console.log(res);
-					setAccessToken(res.data.access); //엑세스토큰 저장
-					// setUserId(res.data.current_user); //사용자 id 저장
+					setUserInfo((prev) => ({
+						...prev,
+						access: res.data.access,
+						username: res.data.username,
+						current_location: res.data.current_location
+					})); //엑세스토큰 저장
 				})
 				.catch((err) => {
 					console.log(err);
@@ -34,9 +37,9 @@ function PrivateProvider() {
 					}
 				});
 		}
-	}, [accessToken]);
+	}, [userInfo.access]);
 
-	return accessToken ? <Outlet /> : '';
+	return userInfo.access ? <Outlet /> : '';
 }
 
 export default PrivateProvider;
