@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
-import useAxios from '../../../useAxios';
+
 // third party - from validation
 import * as Yup from 'yup';
 import { Formik, ErrorMessage } from 'formik';
@@ -15,7 +15,6 @@ import CustomTextField from '../../../components/form/CustomTextField';
 import Title from '../../../components/typography/Title';
 
 export default function SignUp1() {
-	const pAxios = useAxios();
 	const navigate = useNavigate();
 	const [active, setActive] = useState(false);
 	const setUserRegisterInfo = useSetRecoilState(userRegisterInfoAtom);
@@ -28,7 +27,7 @@ export default function SignUp1() {
 	const RandomNicknameButton = ({ setFieldValue }) => {
 		const getRandomNickname = async () => {
 			try {
-				await pAxios.get(`user/random-nickname`).then((result) => {
+				await axios.get(`user/random-nickname`).then((result) => {
 					const { status, data } = result;
 					if (status === 200) {
 						setFieldValue('username', data.nickname);

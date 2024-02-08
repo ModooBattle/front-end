@@ -7,7 +7,7 @@ const StyledNavTop = styled.section`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 1 0 0;
+	/* flex: 1 0 0; */
 `;
 
 const NavTop = ({ title }) => {

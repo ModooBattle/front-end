@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import useAxios from '../../../useAxios';
 import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom, accessTokenAtom, userInfoAtom } from '../../../atom';
 
@@ -12,7 +12,6 @@ import Title from '../../../components/typography/Title';
 
 export default function SignUp7() {
 	const navigate = useNavigate();
-	const pAxios = useAxios();
 	const [active, setActive] = useState(false);
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 	const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
@@ -61,10 +60,9 @@ export default function SignUp7() {
 
 	const signUp = async () => {
 		try {
-			await pAxios.post(`user/signup`, userRegisterInfo).then((result) => {
+			await axios.post(`user/signup`, userRegisterInfo).then((result) => {
 				if (result.status === 200) {
 					console.log(result.data);
-					console.log(result.data.access);
 					setAccessToken(result.data.access);
 					setUserInfo((prev) => ({ ...prev, username: result.data.username, current_location: result.data.current_location }));
 					navigate('/sign-up-8');

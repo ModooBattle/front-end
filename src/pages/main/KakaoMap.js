@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
@@ -7,7 +7,7 @@ const KakaoMap = (props) => {
 	const [searchedInfo, setSearchedInfo] = useState({
 		title: '',
 		info: '',
-		gymAddress: ''
+		homeAddress: ''
 	});
 	// 마커를 담는 배열
 	let markers = [];
@@ -136,7 +136,7 @@ const KakaoMap = (props) => {
 					// ELEMENT_NODE인 경우에만 클래스를 체크
 					if (childNode.nodeType === 1) {
 						if (childNode.classList.contains('address-name')) {
-							setSearchedInfo((prev) => ({ ...prev, gymAddress: childNode.innerText }));
+							setSearchedInfo((prev) => ({ ...prev, homeAddress: childNode.innerText }));
 						}
 					}
 				}
@@ -260,8 +260,6 @@ const KakaoMap = (props) => {
 	useEffect(() => {
 		props.getSearchInfo(searchedInfo);
 	}, [searchedInfo]);
-
-	// console.log(searchedInfo);
 
 	return (
 		<section className="map-container">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
@@ -11,6 +11,8 @@ const KakaoMap = (props) => {
 	});
 	// 마커를 담는 배열
 	let markers = [];
+	const placeList = useRef('');
+	const searchResult = useRef('');
 	/////////////////////////
 
 	// 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
@@ -29,8 +31,6 @@ const KakaoMap = (props) => {
 
 		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
 		const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
-		console.log(infowindow);
 
 		// 키워드로 장소를 검색합니다
 		searchPlaces();
@@ -66,24 +66,35 @@ const KakaoMap = (props) => {
 			}
 		}
 
+		// 목록 클릭 시
+		const handleListClicked = function () {
+			displayInfowindow(marker, title);
+			const position = marker.getPosition();
+			setSearchedInfo((prev) => ({ ...prev, title: title }));
+			setSearchedInfo((prev) => ({ ...prev, info: position }));
+		};
+
 		// 검색 결과 목록과 마커를 표출하는 함수
 		function displayPlaces(places) {
-			const listEl = document.getElementById('places-list'),
-				resultEl = document.getElementById('search-result'),
-				fragment = document.createDocumentFragment(),
+			const fragment = document.createDocumentFragment(),
 				bounds = new kakao.maps.LatLngBounds();
 
 			// 검색 결과 목록에 추가된 항목들을 제거
-			listEl && removeAllChildNods(listEl);
+			placeList && removeAllChildNods(placeList);
 
 			// 지도에 표시되고 있는 마커를 제거
 			removeMarker();
 
+			console.log(places.length);
 			for (let i = 0; i < places.length; i++) {
 				// 마커를 생성하고 지도에 표시
 				let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
 					marker = addMarker(placePosition, i, undefined),
 					itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
+
+				console.dir(itemEl);
+				console.log(i, places[i]);
+				console.log(places.length);
 
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 				// LatLngBounds 객체에 좌표를 추가
@@ -94,40 +105,30 @@ const KakaoMap = (props) => {
 				(function (marker, title) {
 					// 마커 클릭 시
 					kakao.maps.event.addListener(marker, 'click', function () {
-						console.log(marker);
-						console.log(title);
 						displayInfowindow(marker, title);
 						const position = marker.getPosition();
 						setSearchedInfo((prev) => ({ ...prev, title: title }));
 						setSearchedInfo((prev) => ({ ...prev, info: position }));
 					});
-
-					// 목록 클릭 시
-					itemEl.onclick = function () {
-						displayInfowindow(marker, title);
-						const position = marker.getPosition();
-						setSearchedInfo((prev) => ({ ...prev, title: title }));
-						setSearchedInfo((prev) => ({ ...prev, info: position }));
-					};
 				})(marker, places[i].place_name);
+				handleListClicked();
 
 				fragment.appendChild(itemEl);
 			}
 
 			// 검색결과 항목들을 검색결과 목록 Element에 추가
-			listEl && listEl.appendChild(fragment);
-			if (resultEl) {
-				resultEl.scrollTop = 0;
+			placeList && placeList.appendChild(fragment);
+			if (searchResult) {
+				searchResult.scrollTop = 0;
 			}
 
 			// 검색된 장소 위치를 기준으로 지도 범위를 재설정
 			map.setBounds(bounds);
 		}
 
-		// const el = useRef(null)
-
 		// 검색결과 항목을 Element로 반환하는 함수
 		function getListItem(index, places) {
+			console.log(index, places);
 			function handleClick(e) {
 				// childNodes에서 특정 클래스를 가진 노드 찾기
 				for (let i = 0; i < e.target.parentNode.childNodes.length; i++) {
@@ -136,46 +137,30 @@ const KakaoMap = (props) => {
 					// ELEMENT_NODE인 경우에만 클래스를 체크
 					if (childNode.nodeType === 1) {
 						if (childNode.classList.contains('address-name')) {
-							setSearchedInfo((prev) => ({ ...prev, gymAddress: childNode.innerText }));
+							setSearchedInfo((prev) => ({
+								...prev,
+								gymAddress: childNode.innerText
+							}));
 						}
 					}
 				}
 			}
-			const el = document.createElement('li');
-			const div = document.createElement('div');
 
-			el.className = 'item';
-
-			div.addEventListener('click', handleClick);
-			div.id = `list-${index + 1}`;
-			div.className = 'info';
-
-			let itemStr = `
-				<span class="marker marker_${index + 1}">
-					${index + 1}
-				</span>
-				<a class="">
-					<h5 class="info-item place-name">${places.place_name}</h5>
-					${
-						places.road_address_name
-							? `<p class="info-item road-address-name">
-								${places.road_address_name}
-							 </p>
-							 <p class="info-item address-name">
-									${places.address_name}
-									</p>`
-							: `<p class="info-item address-name">
-									${places.address_name}
-							</p>`
-					}
-					<span class="info-item tel">
-						${places.phone}
-					</span>
-				</a>
-			`;
-			div.innerHTML = itemStr;
-			el.appendChild(div);
-			return el;
+			return (
+				<li class="item" onClick={handleListClicked}>
+					<div id={`list-${index + 1}`} class="info">
+						<span class={`marker marker_${index + 1}`}> 1 </span>
+						<a class="" onClick={handleClick}>
+							<h5 class="info-item place-name">${places.place_name}</h5>
+							places.road_address_name ? (<p class="info-item road-address-name">${places.road_address_name}</p>
+							<p class="info-item address-name">${places.address_name}</p>
+							<p class="info-item address-name">${places.address_name}</p>
+							):('')
+							<span class="info-item tel">${places.phone}</span>
+						</a>
+					</div>
+				</li>
+			);
 		}
 
 		// 마커를 생성하고 지도 위에 마커를 표시하는 함수
@@ -243,16 +228,15 @@ const KakaoMap = (props) => {
 		function displayInfowindow(marker, title) {
 			const content = '<div style="padding:5px;z-index:1;" class="marker-title">' + title + '</div>';
 
-			console.log(infowindow);
-
 			infowindow.setContent(content);
 			infowindow.open(map, marker);
 		}
 
 		// 검색결과 목록의 자식 Element를 제거하는 함수
 		function removeAllChildNods(el) {
-			while (el.hasChildNodes()) {
-				el.lastChild && el.removeChild(el.lastChild);
+			console.log(el);
+			while (el.current.childNodes.length > 0) {
+				el.current.lastChild && el.removeChild(el.current.lastChild);
 			}
 		}
 	}, [props.searchKeyword]);
@@ -265,13 +249,13 @@ const KakaoMap = (props) => {
 
 	return (
 		<section className="map-container">
-			<article id="search-result" className="p-2">
+			<article ref={searchResult}>
 				<p className="result-text">
 					<span className="result-keyword something">{props.searchKeyword}</span>
 					검색 결과
 				</p>
 				<div className="scroll-wrapper">
-					<ul id="places-list" />
+					<ul ref={placeList} />
 				</div>
 				<div id="pagination" />
 			</article>

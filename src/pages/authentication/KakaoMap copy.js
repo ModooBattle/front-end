@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
@@ -29,8 +29,6 @@ const KakaoMap = (props) => {
 
 		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
 		const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
-		console.log(infowindow);
 
 		// 키워드로 장소를 검색합니다
 		searchPlaces();
@@ -94,8 +92,6 @@ const KakaoMap = (props) => {
 				(function (marker, title) {
 					// 마커 클릭 시
 					kakao.maps.event.addListener(marker, 'click', function () {
-						console.log(marker);
-						console.log(title);
 						displayInfowindow(marker, title);
 						const position = marker.getPosition();
 						setSearchedInfo((prev) => ({ ...prev, title: title }));
@@ -243,8 +239,6 @@ const KakaoMap = (props) => {
 		function displayInfowindow(marker, title) {
 			const content = '<div style="padding:5px;z-index:1;" class="marker-title">' + title + '</div>';
 
-			console.log(infowindow);
-
 			infowindow.setContent(content);
 			infowindow.open(map, marker);
 		}
@@ -265,7 +259,7 @@ const KakaoMap = (props) => {
 
 	return (
 		<section className="map-container">
-			<article id="search-result" className="p-2">
+			<article id="search-result">
 				<p className="result-text">
 					<span className="result-keyword something">{props.searchKeyword}</span>
 					검색 결과

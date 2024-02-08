@@ -9,6 +9,8 @@ export default function useAxios() {
 
 	const navigate = useNavigate();
 
+	console.log(accessToken);
+
 	const privateAxios = axios.create({
 		headers: {
 			Authorization: `Bearer ${accessToken}`
@@ -53,6 +55,8 @@ export default function useAxios() {
 			});
 		return access_token;
 	};
+
+	console.log(accessToken);
 
 	return privateAxios;
 }

@@ -1,33 +1,7 @@
-import { useState, useEffect } from 'react';
-import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 
-const SignUpLayout = styled.section`
-	color: #fff;
-	height: 100%;
-`;
-
-const NavTop = styled.section`
-	padding: 16px 24px;
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1 0 0;
-`;
-
-const Title = styled.h3`
-	padding-top: 44px;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 150%; /* 36px */
-`;
-
-const BtnFull = styled.button`
-	width: 100%;
-`;
+import NavTop from '../../../components/layout/NavTop';
+import Title from '../../../components/typography/Title';
 
 const MyComponent = () => {
 	return (
@@ -56,7 +30,6 @@ const MyComponent = () => {
 };
 
 export default function SignUp8() {
-	const navigate = useNavigate();
 	const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 	const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
 	const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -65,20 +38,22 @@ export default function SignUp8() {
 		window.location.href = KAKAO_AUTH_URI;
 	};
 	return (
-		<SignUpLayout>
-			<motion.div intial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-				<NavTop>모두의 대결</NavTop>
-				<section className="flex flex-col justify-center h-full">
-					<div className="flex justify-center">
-						<MyComponent />
-					</div>
+		<div className="flex flex-col justify-between h-full">
+			<NavTop title="모두의 대결" />
+			<section className="flex flex-col justify-between h-full">
+				<div className="my-auto">
+					<motion.div intial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+						<div className="flex justify-center">
+							<MyComponent />
+						</div>
+					</motion.div>
 					<Title className="text-center">회원가입 완료!</Title>
 					<p className="text-center">지금 바로 시작 하세요!</p>
-					<BtnFull className="btn btn-primary" onClick={handleKakaoLogin}>
-						홈으로
-					</BtnFull>
-				</section>
-			</motion.div>
-		</SignUpLayout>
+				</div>
+				<button className="btn btn-block btn-primary" onClick={handleKakaoLogin}>
+					홈으로
+				</button>
+			</section>
+		</div>
 	);
 }

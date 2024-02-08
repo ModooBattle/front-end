@@ -66,7 +66,7 @@ export default function SignUp6() {
 				</section>
 			</section>
 			<section>
-				<button className="btn btn-primary" disabled={!active} onClick={handleNextBtn}>
+				<button className="btn btn-block btn-primary" disabled={!active} onClick={handleNextBtn}>
 					다음
 				</button>
 			</section>
