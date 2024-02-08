@@ -16,6 +16,8 @@ export default function useAxios() {
 		}
 	});
 
+	console.log(userInfo.access);
+
 	privateAxios.interceptors.response.use(
 		function (response) {
 			return response;
@@ -23,6 +25,7 @@ export default function useAxios() {
 		async function (err) {
 			console.log(err);
 			if (err.response && err.response.status === 403) {
+				console.log(access_token);
 				const access_token = await refreshAccessToken();
 
 				err.config.headers = {
@@ -44,6 +47,7 @@ export default function useAxios() {
 			.then((res) => {
 				// console.log(res);
 				// setAccessToken(res.data.access_token);
+				console.log(res.data.current_location);
 				setUserInfo((prev) => ({
 					...prev,
 					access: res.data.access,

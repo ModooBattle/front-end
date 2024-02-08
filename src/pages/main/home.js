@@ -1,13 +1,17 @@
 import React from 'react';
 import useAxios from '../../useAxios';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userInfoAtom } from '../../atom';
 //
+import { Icon } from '@iconify/react';
 import NavTop from '../../components/layout/NavTop';
 import KakaoMap from './KakaoMap';
 import CustomTextField from '../../components/form/CustomTextField';
 
 export default function Login() {
 	const pAxios = useAxios();
+	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 	const [active, setActive] = useState(false);
 	// 입력 폼 변화 감지하여 입력 값 관리
 	const [Value, setValue] = useState('');
@@ -19,6 +23,8 @@ export default function Login() {
 		longitude: ''
 	});
 	const [selectTitle, setSelectTitle] = useState('');
+
+	console.log(userInfo);
 
 	// 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
 	const keywordChange = (e) => {
@@ -64,18 +70,13 @@ export default function Login() {
 	return (
 		<div className="flex flex-col h-full">
 			<NavTop title="모두의 대결" />
-			<button className="btn" onClick={() => document.getElementById('my_modal_3').showModal()}>
-				{/* <button className="btn" onClick={(e) => testFunction(e)}> */}
-				<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth="2"
-						d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-					/>
-				</svg>
-				현재 위치로 설정
-			</button>
+			<article className="flex items-center justify-end">
+				{userInfo.current_location === null ? <h3>정보 없음</h3> : <h3>청라동</h3>}
+				<button className="btn btn-sm btn-neutral ml-2" onClick={() => document.getElementById('my_modal_3').showModal()}>
+					<Icon icon="teenyicons:location-outline"></Icon>
+					현재 위치 설정
+				</button>
+			</article>
 			<dialog id="my_modal_3" className="modal">
 				<div className="modal-box">
 					<form method="dialog">
