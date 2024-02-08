@@ -27,7 +27,7 @@ export const accessTokenAtom = atom({
 
 export const userInfoAtom = atom({
 	key: 'userInfo',
-	default: { username: '', current_location: '' }
+	default: { access: '', username: '', current_location: '' }
 });
 
 //authentication

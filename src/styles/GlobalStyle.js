@@ -8,6 +8,15 @@ const GlobalStyles = createGlobalStyle`
         --primary-dark: #F57902;
 
         --text-main-color: #151517;
+
+        --fs-1: .75rem; // 12px
+        --fs-2: .85rem; // 14px
+        --fs-3: 1rem; // 16px
+        --fs-4: 1.25rem; // 20px
+        --fs-5: 1.5rem; // 24px
+        --fs-6: 1.75rem; // 28px
+        --fs-7: 2rem; // 32px
+        --fs-8: 2.25rem; // 36px
     }
     ${reset}
     
@@ -23,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 10px;
+        font-size: 1rem;
         vertical-align: baseline;
     }
     body{

@@ -32,7 +32,7 @@ input.Mui-disabled:disabled {
 }
 
 .btn-primary {
-	font-size: 1.25rem !important;
+	font-size: 1rem !important;
 }
 
 /********************* 성별 pick UI **********************/
@@ -173,7 +173,7 @@ input.Mui-disabled:disabled {
 							margin-bottom: 2px;
 						}
 						&&.place-name {
-							font-size: 14px;
+							font-size: var(--fs-2);
 						}
 					}
 				}

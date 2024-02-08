@@ -9,12 +9,12 @@ const LoginLayout = styled.section`
 	flex-direction: column;
 	height: 100%;
 	> .title {
-		font-size: 20px;
+		font-size: var(--fs-4);
 		font-family: GmarketSansBold;
 		margin-top: 162px;
 	}
 	> .intro-word {
-		font-size: 38px;
+		font-size: var(--fs-8);
 		font-family: GmarketSansBold;
 		margin-top: 32px;
 		line-height: 150%;
@@ -42,7 +42,7 @@ const KakaoLoginBtn = styled.button`
 	flex-shrink: 0;
 	border-radius: 8px;
 	background: #fee500;
-	font-size: 16px;
+	font-size: 1rem;
 	color: #371d1e;
 	font-weight: medium;
 `;
