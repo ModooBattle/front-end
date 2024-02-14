@@ -46,7 +46,7 @@ export default function Login() {
 	};
 
 	const getSearchInfo = ({ title, info, homeAddress }) => {
-		setSelectPlace((prev) => ({ ...prev, address: homeAddress, latitude: info.La, longitude: info.Ma }));
+		setSelectPlace((prev) => ({ ...prev, address: homeAddress, latitude: info.Ma, longitude: info.La }));
 		setSelectTitle(title);
 	};
 

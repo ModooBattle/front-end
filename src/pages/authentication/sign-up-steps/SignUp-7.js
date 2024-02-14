@@ -44,8 +44,8 @@ export default function SignUp7() {
 	const getSearchInfo = ({ title, info, gymAddress }) => {
 		setSelectPlace(title);
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, name: title } }));
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.La } }));
-		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.Ma } }));
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, latitude: info.Ma } })); // 위도
+		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, longitude: info.La } })); // 경도
 		setUserRegisterInfo((prev) => ({ ...prev, gym: { ...prev.gym, address: gymAddress } }));
 	};
 
