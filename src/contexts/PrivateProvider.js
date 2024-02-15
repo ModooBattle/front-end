@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInfoAtom } from '../atom';
 import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -15,7 +15,6 @@ function PrivateProvider() {
 			axios
 				.post('/user/access', {}) //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
 				.then((res) => {
-					console.log(res);
 					setUserInfo((prev) => ({
 						...prev,
 						access: res.data.access,

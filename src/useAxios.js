@@ -8,7 +8,7 @@ export default function useAxios() {
 
 	const navigate = useNavigate();
 
-	console.log(userInfo);
+	// console.log(userInfo);
 
 	const privateAxios = axios.create({
 		headers: {
@@ -16,7 +16,7 @@ export default function useAxios() {
 		}
 	});
 
-	console.log(userInfo.access);
+	// console.log(userInfo.access);
 
 	privateAxios.interceptors.response.use(
 		function (response) {

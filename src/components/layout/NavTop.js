@@ -3,6 +3,9 @@ import { Icon } from '@iconify/react';
 import { useRecoilState } from 'recoil';
 import useAxios from '../../useAxios';
 import { userInfoAtom } from '../../atom';
+import { useNavigate } from 'react-router-dom';
+//sweetalert2
+import Swal from 'sweetalert2';
 
 const StyledNavTop = styled.section`
 	color: #fff;
@@ -17,12 +20,21 @@ const StyledNavTop = styled.section`
 const NavTop = ({ title }) => {
 	const pAxios = useAxios();
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-	console.log(userInfo.access);
+	const location = useNavigate();
 	const handleLogout = () => {
 		pAxios
 			.post(`/user/logout`)
 			.then((res) => {
-				console.log(res);
+				if (res.status === 200) {
+					Swal.fire({
+						icon: 'info',
+						title: '정보',
+						text: `로그아웃 되었습니다. 로그인 화면으로 이동 합니다.`,
+						confirmButtonText: '확인'
+					}).then(() => {
+						location(`/login`);
+					});
+				}
 			})
 			.catch((err) => {
 				console.log(err);

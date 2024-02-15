@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import useAxios from '../../useAxios';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -12,6 +12,7 @@ import CustomTextField from '../../components/form/CustomTextField';
 export default function Login() {
 	const pAxios = useAxios();
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+	const [open, setOpen] = useState(false);
 	const [active, setActive] = useState(false);
 	// 입력 폼 변화 감지하여 입력 값 관리
 	const [Value, setValue] = useState('');
@@ -24,7 +25,12 @@ export default function Login() {
 	});
 	const [selectTitle, setSelectTitle] = useState('');
 
-	console.log(userInfo);
+	const handleModalOpen = () => {
+		setOpen(true);
+	};
+	const handleModalClose = () => {
+		setOpen(false);
+	};
 
 	// 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
 	const keywordChange = (e) => {
@@ -50,8 +56,6 @@ export default function Login() {
 		setSelectTitle(title);
 	};
 
-	const modal = document.getElementById('my_modal_3');
-
 	const handleUserLocation = async () => {
 		try {
 			await pAxios.post(`/user/current-location`, selectPlace).then((result) => {
@@ -59,7 +63,7 @@ export default function Login() {
 				if (result.status === 200) {
 					setUserInfo((prev) => ({ ...prev, current_location: selectPlace.address }));
 					alert('설정 되었습니다.');
-					modal.open = false;
+					setOpen(false);
 				}
 			});
 		} catch (error) {
@@ -72,16 +76,25 @@ export default function Login() {
 			<NavTop title="모두의 대결" />
 			<article className="flex items-center justify-end">
 				{userInfo.current_location === null ? <h3>정보 없음</h3> : <h3>{userInfo.current_location}</h3>}
-				<button className="btn btn-sm btn-neutral ml-2" onClick={() => document.getElementById('my_modal_3').showModal()}>
-					<Icon icon="teenyicons:location-outline"></Icon>
-					현재 위치 설정
-				</button>
+				{userInfo.current_location === null ? (
+					<button className="btn btn-sm btn-neutral ml-2" onClick={handleModalOpen}>
+						<Icon icon="teenyicons:location-outline"></Icon>
+						나의 위치 수정
+					</button>
+				) : (
+					<button className="btn btn-sm btn-neutral ml-2" onClick={handleModalOpen}>
+						<Icon icon="teenyicons:location-outline"></Icon>
+						나의 위치 수정
+					</button>
+				)}
 			</article>
-			<dialog id="my_modal_3" className="modal">
+			<dialog id="my_modal_3" className="modal" open={open}>
 				<div className="modal-box">
 					<form method="dialog">
 						{/* if there is a button in form, it will close the modal */}
-						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>
+							✕
+						</button>
 					</form>
 					<h3 className="font-bold text-lg">현재 위치를 설정 해 주세요</h3>
 					<article>
