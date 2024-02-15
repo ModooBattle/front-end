@@ -57,9 +57,9 @@ export default function Login() {
 			await pAxios.post(`/user/current-location`, selectPlace).then((result) => {
 				console.log(result.status);
 				if (result.status === 200) {
+					setUserInfo((prev) => ({ ...prev, current_location: selectPlace.address }));
 					alert('설정 되었습니다.');
 					modal.open = false;
-					// modal.attributes[2].name = '';
 				}
 			});
 		} catch (error) {
@@ -71,7 +71,7 @@ export default function Login() {
 		<div className="flex flex-col h-full">
 			<NavTop title="모두의 대결" />
 			<article className="flex items-center justify-end">
-				{userInfo.current_location === null ? <h3>정보 없음</h3> : <h3>청라동</h3>}
+				{userInfo.current_location === null ? <h3>정보 없음</h3> : <h3>{userInfo.current_location}</h3>}
 				<button className="btn btn-sm btn-neutral ml-2" onClick={() => document.getElementById('my_modal_3').showModal()}>
 					<Icon icon="teenyicons:location-outline"></Icon>
 					현재 위치 설정
