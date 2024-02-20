@@ -7,21 +7,19 @@ import { useNavigate } from 'react-router-dom';
 export default function KakaoLogin() {
 	const navigate = useNavigate();
 	const AUTHORIZATION_CODE = new URL(document.location.toString()).searchParams.get('code');
+	// const testUrl = new URL(document.location.toString());
 	const [userRegisterInfo, setUserRegisterInfo] = useRecoilState(userRegisterInfoAtom);
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+
+	// console.log(testUrl); // http://127.0.0.1:3000/oauth/callback/kakao?code=xZWcwwdt84SfQ4vylPFiLYG8475cjPmbwP9qUo8AIyQzjUiUH2WkAFf5mTMKPXSYAAABjawsgEQWphHJzwXJqw
+	// console.log(AUTHORIZATION_CODE); //h4dlA1MaLVNlrtcv7TZG6r90VFNdvreKapdnXU2JUC_M_Y2Mo510NhTRn90KPXVbAAABjawm_Y-i-KZYUq23DA
 
 	const kakaoLoginCode = async () => {
 		try {
 			await axios.post(`user/login`, { code: AUTHORIZATION_CODE }).then((result) => {
 				const { status, data } = result;
 				if (status === 200) {
-					setUserInfo((prev) => ({
-						...prev,
-						access: data.access,
-						username: data.username,
-						current_location: data.current_location
-					})); //엑세스토큰 저장
-
+					setUserInfo((prev) => ({ ...prev, access: data.access, user: data.user }));
 					navigate('/home');
 				}
 			});
@@ -33,6 +31,9 @@ export default function KakaoLogin() {
 			}
 		}
 	};
+
+	console.log(userInfo);
+
 	useEffect(() => {
 		kakaoLoginCode();
 	}, []);

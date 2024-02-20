@@ -10,9 +10,12 @@ module.exports = function (app) {
 	// );
 	app.use(
 		createProxyMiddleware('/api', {
-			target: 'https://121.140.7.121:1444',
+			target: 'https://minheeyoo88.pythonanywhere.com',
 			changeOrigin: true, // server 올린때 false
 			secure: false
 		})
 	);
 };
+
+// target: 'https://121.140.7.121:1444',
+// https://minheeyoo88.pythonanywhere.com/api/swagger?format=openapi

@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react';
 import NavTop from '../../components/layout/NavTop';
 import KakaoMap from './KakaoMap';
 import CustomTextField from '../../components/form/CustomTextField';
+import JymList from './JymList';
 
 export default function Login() {
 	const pAxios = useAxios();
@@ -71,23 +72,31 @@ export default function Login() {
 		}
 	};
 
+	console.log(userInfo.current_location);
+	console.log(userInfo.user.username);
+
 	return (
 		<div className="flex flex-col h-full">
 			<NavTop title="모두의 대결" />
 			<article className="flex items-center justify-end">
-				{userInfo.current_location === null ? <h3>정보 없음</h3> : <h3>{userInfo.current_location}</h3>}
-				{userInfo.current_location === null ? (
-					<button className="btn btn-sm btn-neutral ml-2" onClick={handleModalOpen}>
+				{console.log(userInfo.current_location)}
+				{userInfo.current_location === null || userInfo.current_location === undefined ? (
+					<button className="btn btn-sm btn-neutral mr-2" onClick={handleModalOpen}>
 						<Icon icon="teenyicons:location-outline"></Icon>
-						나의 위치 수정
+						나의 위치 등록
 					</button>
 				) : (
-					<button className="btn btn-sm btn-neutral ml-2" onClick={handleModalOpen}>
+					<button className="btn btn-sm btn-neutral mr-2" onClick={handleModalOpen}>
 						<Icon icon="teenyicons:location-outline"></Icon>
-						나의 위치 수정
 					</button>
 				)}
+				{userInfo.current_location === null || userInfo.current_location === undefined ? (
+					<h3>나의 위치를 등록 해주세요</h3>
+				) : (
+					<h3>{userInfo.current_location}</h3>
+				)}
 			</article>
+			{/* modal */}
 			<dialog id="my_modal_3" className="modal" open={open}>
 				<div className="modal-box">
 					<form method="dialog">
@@ -135,7 +144,9 @@ export default function Login() {
 				</div>
 			</dialog>
 			{/* list */}
-			<section></section>
+			<section>
+				<JymList />
+			</section>
 			{/* nav bottom */}
 			<div className="btm-nav relative mt-auto">
 				<button>

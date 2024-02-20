@@ -19,9 +19,39 @@ export const userRegisterInfoAtom = atom({
 	}
 });
 
+// export const userInfoAtom = atom({
+// 	key: 'userInfo',
+// 	default: { access: '', username: '', current_location: '' }
+
+// });
+
 export const userInfoAtom = atom({
 	key: 'userInfo',
-	default: { access: '', username: '', current_location: '' }
+	default: {
+		access: '',
+		user: {
+			id: null,
+			username: '',
+			age: '',
+			gender: '',
+			years: null,
+			last_login: '',
+			weight: {
+				id: null,
+				name: '',
+				min_weight: null
+			},
+			gym: {
+				id: null,
+				name: '',
+				address: '',
+				latitude: null,
+				longitude: null,
+				sport: null
+			},
+			current_location: ''
+		}
+	}
 });
 
 //authentication

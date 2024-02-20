@@ -51,7 +51,8 @@ export default function Login() {
 	const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 	const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
 	const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-	// http://127.0.0.1:3000/oauth/callback/kakao?code=QF9wIJZb4c80zYxkXh2DY4hv7gotOxncI0nkFjikX5nhE9tBB6NifzH82E8KPXMXAAABjPK35Sr7Ewsnpgvovw
+	// https://kauth.kakao.com/oauth/authorize?client_id=159d9d1c060e04c685535bd66e4591ee&redirect_uri=http://127.0.0.1:3000/oauth/callback/kakao&response_type=code
+	// 302 Found
 	const handleKakaoLogin = () => {
 		console.log(KAKAO_AUTH_URI);
 		window.location.href = KAKAO_AUTH_URI;
