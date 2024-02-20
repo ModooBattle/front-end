@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import useAxios from '../../useAxios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { userInfoAtom } from '../../atom';
 //
@@ -62,7 +62,7 @@ export default function Login() {
 			await pAxios.post(`/user/current-location`, selectPlace).then((result) => {
 				console.log(result.status);
 				if (result.status === 200) {
-					setUserInfo((prev) => ({ ...prev, current_location: selectPlace.address }));
+					setUserInfo((prev) => ({ ...prev, user: { current_location: selectPlace.address } }));
 					alert('설정 되었습니다.');
 					setOpen(false);
 				}
@@ -72,15 +72,12 @@ export default function Login() {
 		}
 	};
 
-	console.log(userInfo.current_location);
-	console.log(userInfo.user.username);
-
 	return (
 		<div className="flex flex-col h-full">
 			<NavTop title="모두의 대결" />
 			<article className="flex items-center justify-end">
-				{console.log(userInfo.current_location)}
-				{userInfo.current_location === null || userInfo.current_location === undefined ? (
+				{console.log(userInfo.user.current_location)}
+				{userInfo.user.current_location === null || userInfo.user.current_location === undefined ? (
 					<button className="btn btn-sm btn-neutral mr-2" onClick={handleModalOpen}>
 						<Icon icon="teenyicons:location-outline"></Icon>
 						나의 위치 등록
@@ -90,10 +87,10 @@ export default function Login() {
 						<Icon icon="teenyicons:location-outline"></Icon>
 					</button>
 				)}
-				{userInfo.current_location === null || userInfo.current_location === undefined ? (
+				{userInfo.user.current_location === null || userInfo.user.current_location === undefined ? (
 					<h3>나의 위치를 등록 해주세요</h3>
 				) : (
-					<h3>{userInfo.current_location}</h3>
+					<h3>{userInfo.user.current_location}</h3>
 				)}
 			</article>
 			{/* modal */}

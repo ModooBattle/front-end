@@ -15,12 +15,7 @@ function PrivateProvider() {
 			axios
 				.post('/user/access', {}) //엑세스 토큰 {} 비워놓으면 리프레시토큰 확인해서 백엔드에서 액세스 토큰 자동으로 재발금
 				.then((res) => {
-					setUserInfo((prev) => ({
-						...prev,
-						access: res.data.access,
-						username: res.data.username,
-						current_location: res.data.current_location
-					})); //엑세스토큰 저장
+					setUserInfo((prev) => ({ ...prev, access: res.data.access, user: res.data.user }));
 				})
 				.catch((err) => {
 					console.log(err);
