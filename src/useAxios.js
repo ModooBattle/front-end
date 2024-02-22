@@ -45,15 +45,6 @@ export default function useAxios() {
 		await axios
 			.post('/user/access')
 			.then((res) => {
-				// console.log(res);
-				// setAccessToken(res.data.access_token);
-				// setUserInfo((prev) => ({
-				// 	...prev,
-				// 	access: res.data.access,
-				// 	username: res.data.username,
-				// 	current_location: res.data.current_location
-				// }));
-				console.log(res);
 				setUserInfo((prev) => ({ ...prev, access: res.access, user: res.user }));
 				access_token = res.data.access;
 			})
@@ -64,6 +55,5 @@ export default function useAxios() {
 		return access_token;
 	};
 
-	console.log(userInfo);
 	return privateAxios;
 }

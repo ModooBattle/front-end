@@ -1,13 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-
+import BottomNav from './BottomNav';
 function Layout() {
 	return (
 		<MainLayout>
 			<div className="contents_container">
 				<Outlet />
 			</div>
+			<BottomNav />
 		</MainLayout>
 	);
 }

@@ -97,7 +97,7 @@ export default function SignUp7() {
 										<CustomTextField
 											id="movie-title"
 											name="place"
-											label="우리집 주소"
+											label="체육관 이름"
 											variant="standard"
 											onChange={keywordChange}
 											disabled={active}
