@@ -11,9 +11,13 @@ function Layout() {
 	return (
 		<MainLayout>
 			<div className="contents_container">
-				<Outlet />
+				<section>
+					<div className="m-4">
+						<Outlet />
+					</div>
+					{splitPathName[1] === 'oauth' ? '' : <BottomNav />}
+				</section>
 			</div>
-			{splitPathName[1] === 'oauth' ? '' : <BottomNav />}
 		</MainLayout>
 	);
 }
@@ -38,7 +42,12 @@ const MainLayout = styled.section`
 		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 		position: relative;
 		overflow: hidden;
-		padding: 24px;
+
+		> section {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
 	}
 	@media (min-width: 1000px) {
 		& > .contents_container {
