@@ -14,6 +14,7 @@ import SignUp6 from './pages/authentication/sign-up-steps/SignUp-6';
 import SignUp7 from './pages/authentication/sign-up-steps/SignUp-7';
 import SignUp8 from './pages/authentication/sign-up-steps/SignUp-8';
 import Home from './pages/main/home';
+import JymListDetail from './pages/main/JymListDetail';
 // import Main from './pages/Main/Main';
 
 const Router = () => {
@@ -23,21 +24,22 @@ const Router = () => {
 				<Route path="/" element={<PrivateProvider />}>
 					<Route element={<Layout />}>
 						<Route path="/home" element={<Home />} />
+						<Route path="/home/:detail" element={<JymListDetail />} />
 						{/* <Route path="/main" element={<Main />} /> */}
 					</Route>
 				</Route>
 
 				<Route element={<Layout />}>
-					<Route path="/login" element={<Login />} />
+					<Route path="/oauth/login" element={<Login />} />
 					<Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
-					<Route path="/sign-up-1" element={<SignUp1 />} />
-					<Route path="/sign-up-2" element={<SignUp2 />} />
-					<Route path="/sign-up-3" element={<SignUp3 />} />
-					<Route path="/sign-up-4" element={<SignUp4 />} />
-					<Route path="/sign-up-5" element={<SignUp5 />} />
-					<Route path="/sign-up-6" element={<SignUp6 />} />
-					<Route path="/sign-up-7" element={<SignUp7 />} />
-					<Route path="/sign-up-8" element={<SignUp8 />} />
+					<Route path="/oauth/sign-up-1" element={<SignUp1 />} />
+					<Route path="/oauth/sign-up-2" element={<SignUp2 />} />
+					<Route path="/oauth/sign-up-3" element={<SignUp3 />} />
+					<Route path="/oauth/sign-up-4" element={<SignUp4 />} />
+					<Route path="/oauth/sign-up-5" element={<SignUp5 />} />
+					<Route path="/oauth/sign-up-6" element={<SignUp6 />} />
+					<Route path="/oauth/sign-up-7" element={<SignUp7 />} />
+					<Route path="/oauth/sign-up-8" element={<SignUp8 />} />
 					{/* <Route
 						element={
 							<AnimatePresence mode="wait">

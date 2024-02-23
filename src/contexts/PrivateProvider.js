@@ -27,7 +27,7 @@ function PrivateProvider() {
 							text: `세션 정보가 만료 되었습니다. 다시 로그인 해 주세요.`,
 							confirmButtonText: '확인'
 						});
-						navigate('/login');
+						navigate('/oauth/login');
 					}
 				});
 		}

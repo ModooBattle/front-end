@@ -32,7 +32,7 @@ const NavTop = ({ title }) => {
 						text: `로그아웃 되었습니다. 로그인 화면으로 이동 합니다.`,
 						confirmButtonText: '확인'
 					}).then(() => {
-						location(`/login`);
+						location(`/oauth/login`);
 					});
 				}
 			})

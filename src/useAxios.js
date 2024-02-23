@@ -50,7 +50,7 @@ export default function useAxios() {
 			})
 			.catch((e) => {
 				console.log(e);
-				navigate('/login');
+				navigate('/oauth/login');
 			});
 		return access_token;
 	};

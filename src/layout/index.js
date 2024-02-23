@@ -2,13 +2,18 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import BottomNav from './BottomNav';
+import { useLocation } from 'react-router-dom';
+
 function Layout() {
+	const location = useLocation();
+	const splitPathName = location.pathname.split('/');
+
 	return (
 		<MainLayout>
 			<div className="contents_container">
 				<Outlet />
 			</div>
-			<BottomNav />
+			{splitPathName[1] === 'oauth' ? '' : <BottomNav />}
 		</MainLayout>
 	);
 }
