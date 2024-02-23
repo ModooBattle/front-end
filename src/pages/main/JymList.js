@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 import useAxios from '../../useAxios';
+import { useNavigate, useParams } from 'react-router-dom';
+// infinite scroll
 import { useInView } from 'react-intersection-observer';
 
 export default function JymList({ userCurrentLocation }) {
 	const pAxios = useAxios();
+	const navigate = useNavigate();
+	const params = useParams();
 	const [jymList, setJymList] = useState(null);
 	const [page, setPage] = useState(1); // 현재 페이지 번호 (페이지네이션)
 	const [ref, inView] = useInView();
+
+	console.log('Jymlist: ' + params);
 
 	const getJymList = useCallback(async () => {
 		try {
@@ -21,7 +27,7 @@ export default function JymList({ userCurrentLocation }) {
 		}
 	}, [jymList, userCurrentLocation]);
 
-	const scrollGetJymList = useCallback(async () => {
+	const scrollGetJymList = async () => {
 		try {
 			await pAxios.get(`/sport/gym/list?distance_limit=20&page_no=${page}&length=8`).then((result) => {
 				if (result.status === 200) {
@@ -32,7 +38,7 @@ export default function JymList({ userCurrentLocation }) {
 		} catch (error) {
 			console.log(error);
 		}
-	}, [jymList, userCurrentLocation]);
+	};
 
 	useEffect(() => {
 		getJymList();
@@ -45,6 +51,10 @@ export default function JymList({ userCurrentLocation }) {
 		}
 	}, [inView]);
 
+	const moveToDetail = (jymId, row) => {
+		navigate(`/home/jym-detail-${jymId}`, { state: { row } });
+	};
+
 	return (
 		<article className="h-full flex flex-col justify-between overflow-y-scroll">
 			{userCurrentLocation !== null ? (
@@ -52,8 +62,11 @@ export default function JymList({ userCurrentLocation }) {
 					<ul role="list" className="divide-y divide-gray-100">
 						{jymList !== null
 							? jymList.map((row) => (
-									<li key={row.id} className="flex justify-between gap-x-6 my-5 bg-neutral p-3 rounded-md">
-										{console.log(row)}
+									<li
+										key={row.id}
+										className="flex justify-between gap-x-6 my-5 bg-neutral p-3 rounded-md"
+										onClick={() => moveToDetail(row.id, row)}
+									>
 										<div className="flex min-w-0 gap-x-4">
 											<div className="h-12 w-12 flex rounded-full bg-base-200 justify-center items-center">
 												<img className="w-6" src="/images/images/boxing.svg" alt="" />
