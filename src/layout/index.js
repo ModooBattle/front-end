@@ -12,7 +12,7 @@ function Layout() {
 		<MainLayout>
 			<div className="contents_container">
 				<section>
-					<div className="m-4">
+					<div className="my-4 mx-5">
 						<Outlet />
 					</div>
 					{splitPathName[1] === 'oauth' ? '' : <BottomNav />}
