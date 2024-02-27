@@ -10,7 +10,7 @@ import { Formik, ErrorMessage } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 //
-import NavTop from '../../../components/layout/NavTop';
+import NavTop from '../../../layout/NavTop';
 import CustomTextField from '../../../components/form/CustomTextField';
 import Title from '../../../components/typography/Title';
 

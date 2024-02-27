@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import NavTop from '../../../components/layout/NavTop';
+import NavTop from '../../../layout/NavTop';
 import Title from '../../../components/typography/Title';
 
 const MyComponent = () => {

@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { Icon } from '@iconify/react';
 import { useRecoilState } from 'recoil';
-import useAxios from '../../useAxios';
-import { userInfoAtom } from '../../atom';
+import useAxios from '../useAxios';
+import { userInfoAtom } from '../atom';
 import { useNavigate } from 'react-router-dom';
 //sweetalert2
 import Swal from 'sweetalert2';
@@ -42,7 +42,9 @@ const NavTop = ({ title }) => {
 	};
 	return (
 		<StyledNavTop>
-			<button className="m-1 btn btn-sm">{/* <Icon icon="material-symbols:menu" style={{ fontSize: '18px' }}></Icon> */}</button>
+			<button className="m-1 btn btn-sm">
+				<Icon icon="material-symbols:arrow-back-ios" />
+			</button>
 			<h2 className="ml-auto">{title}</h2>
 			<details className="dropdown dropdown-end ml-auto">
 				<summary className="m-1 btn btn-sm">

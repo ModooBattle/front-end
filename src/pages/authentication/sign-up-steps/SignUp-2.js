@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as WomanDefault } from '../../../asset/images/female.svg';
 import { ReactComponent as ManDefault } from '../../../asset/images/male.svg';
 //
-import NavTop from '../../../components/layout/NavTop';
+import NavTop from '../../../layout/NavTop';
 import Title from '../../../components/typography/Title';
 
 export default function SignUp2() {

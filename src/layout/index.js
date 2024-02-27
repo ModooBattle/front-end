@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import BottomNav from './BottomNav';
@@ -12,10 +11,10 @@ function Layout() {
 		<MainLayout>
 			<div className="contents_container">
 				<section>
-					<div className="my-4 mx-5">
+					<div className="content_wrap my-4 mx-5">
 						<Outlet />
 					</div>
-					{splitPathName[1] === 'oauth' ? '' : <BottomNav />}
+					{splitPathName[1] === 'oauth' || splitPathName[1] === '404' ? '' : <BottomNav />}
 				</section>
 			</div>
 		</MainLayout>
@@ -47,6 +46,10 @@ const MainLayout = styled.section`
 			height: 100%;
 			display: flex;
 			flex-direction: column;
+
+			> .content_wrap {
+				height: calc(100% - 97px);
+			}
 		}
 	}
 	@media (min-width: 1000px) {

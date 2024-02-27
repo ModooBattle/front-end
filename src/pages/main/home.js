@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { userInfoAtom } from '../../atom';
 //
 import { Icon } from '@iconify/react';
-import NavTop from '../../components/layout/NavTop';
+import NavTop from '../../layout/NavTop';
 import KakaoMap from './KakaoMap';
 import CustomTextField from '../../components/form/CustomTextField';
 import JymList from './JymList';

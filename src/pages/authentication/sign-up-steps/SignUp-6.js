@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { userRegisterInfoAtom } from '../../../atom';
 import { useNavigate } from 'react-router-dom';
 //
-import NavTop from '../../../components/layout/NavTop';
+import NavTop from '../../../layout/NavTop';
 import Title from '../../../components/typography/Title';
 
 export default function SignUp6() {

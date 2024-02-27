@@ -31,6 +31,14 @@ input.Mui-disabled:disabled {
 	-webkit-text-fill-color: #686866 !important;
 }
 
+/********************* 공통 UI **********************/
+.title {
+	color: #fff;
+	font-size: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
+}
+
 /********************* 성별 pick UI **********************/
 .radio-pick-gender [type='radio'] {
 	position: absolute;

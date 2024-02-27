@@ -6,7 +6,7 @@ import { userRegisterInfoAtom, userInfoAtom } from '../../../atom';
 import { useNavigate } from 'react-router-dom';
 import KaKaoMap from '../KakaoMap';
 //
-import NavTop from '../../../components/layout/NavTop';
+import NavTop from '../../../layout/NavTop';
 import CustomTextField from '../../../components/form/CustomTextField';
 import Title from '../../../components/typography/Title';
 
