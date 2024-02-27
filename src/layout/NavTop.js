@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { useRecoilState } from 'recoil';
 import useAxios from '../useAxios';
 import { userInfoAtom } from '../atom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 //sweetalert2
 import Swal from 'sweetalert2';
 
@@ -20,7 +20,9 @@ const StyledNavTop = styled.section`
 const NavTop = ({ title }) => {
 	const pAxios = useAxios();
 	const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-	const location = useNavigate();
+	const navigate = useNavigate();
+	const loacation = useLocation();
+
 	const handleLogout = () => {
 		pAxios
 			.post(`/user/logout`)
@@ -32,7 +34,7 @@ const NavTop = ({ title }) => {
 						text: `로그아웃 되었습니다. 로그인 화면으로 이동 합니다.`,
 						confirmButtonText: '확인'
 					}).then(() => {
-						location(`/oauth/login`);
+						navigate(`/oauth/login`);
 					});
 				}
 			})
@@ -40,11 +42,16 @@ const NavTop = ({ title }) => {
 				console.log(err);
 			});
 	};
+
 	return (
 		<StyledNavTop>
-			<button className="m-1 btn btn-sm">
-				<Icon icon="material-symbols:arrow-back-ios" />
-			</button>
+			{loacation.pathname === '/' ? (
+				<div style={{ width: '42px' }} />
+			) : (
+				<button className="m-1 btn btn-sm" onClick={() => navigate(-1)}>
+					<Icon icon="material-symbols:arrow-back-ios" />
+				</button>
+			)}
 			<h2 className="ml-auto">{title}</h2>
 			<details className="dropdown dropdown-end ml-auto">
 				<summary className="m-1 btn btn-sm">
