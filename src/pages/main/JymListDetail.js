@@ -49,7 +49,7 @@ export default function JymListDetail() {
 				<h5 className="title">회원 리스트</h5>
 				<ul>
 					{jymInfo.users.map((user) => (
-						<li className="flex justify-between gap-x-6 mb-5 mt-3 bg-neutral p-3 rounded-md" key={user.id}>
+						<li className="flex justify-between gap-x-6 mb-5 mt-3 bg-neutral p-3 rounded-md items-center" key={user.id}>
 							<div className="flex items-center">
 								{user.gender === 'F' ? (
 									<div className="h-12 w-12 flex rounded-full justify-center items-center mr-2">
@@ -62,19 +62,19 @@ export default function JymListDetail() {
 								)}
 								<ul>
 									<li className="flex items-center">
-										{user.username}
+										<span className="text-white">{user.username}</span>
 										<Icon icon="mdi:dot" />
 										{user.gender === 'F' ? '여성' : '남성'}
 									</li>
-									<li className="flex items-center my-1">
+									<li className="flex items-center mt-1 text-sm">
 										{user.weight.name} 급
 										<Icon icon="mdi:dot" />
 										{user.weight.min_weight} kg 미만
 									</li>
 									<li className="flex items-center">
-										<span>경력 {user.years} 년</span>
+										<span className="text-sm">경력 {user.years} 년</span>
 										{user.last_login ? <Icon icon="mdi:dot" /> : ''}
-										<span>{user.last_login ? `${foramtDate(user.last_login)} 접속` : ''} </span>
+										<span className="text-sm">{user.last_login ? `${foramtDate(user.last_login)} 접속` : ''} </span>
 									</li>
 								</ul>
 							</div>
