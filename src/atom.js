@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 export const userRegisterInfoAtom = atom({
 	key: 'userRegisterInfo',
@@ -18,12 +21,6 @@ export const userRegisterInfoAtom = atom({
 		}
 	}
 });
-
-// export const userInfoAtom = atom({
-// 	key: 'userInfo',
-// 	default: { access: '', username: '', current_location: '' }
-
-// });
 
 export const userInfoAtom = atom({
 	key: 'userInfo',
@@ -52,6 +49,15 @@ export const userInfoAtom = atom({
 			current_location: ''
 		}
 	}
+});
+
+export const chatTargetInfoAtom = atom({
+	key: 'chatTargetInfo',
+	default: {
+		receiverId: null,
+		receiverName: ''
+	},
+	effects_UNSTABLE: [persistAtom]
 });
 
 //authentication

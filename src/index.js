@@ -4,7 +4,7 @@ import axios from 'axios';
 import App from './App';
 
 // 서버 올릴 때 앞주소 맟추기
-// const baseURL = window.location.host;
+// axios.defaults.baseURL = 'https://minheeyoo88.pythonanywhere.com/api';
 axios.defaults.baseURL = '/api/'; //local-전용
 axios.defaults.withCredentials = true;
 axios.defaults.headers = {

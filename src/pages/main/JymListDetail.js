@@ -1,5 +1,7 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NavTop from '../../layout/NavTop';
+import { useSetRecoilState } from 'recoil';
+import { chatTargetInfoAtom } from '../../atom';
 // 날짜 포맷
 import { format, formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -8,9 +10,11 @@ import { Icon } from '@iconify/react';
 
 export default function JymListDetail() {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const jymInfo = location.state.row;
+	const setChatUserId = useSetRecoilState(chatTargetInfoAtom);
 
-	function foramtDate(date) {
+	const foramtDate = (date) => {
 		const d = new Date(date);
 		const now = Date.now();
 		const diff = (now - d.getTime()) / 1000; // 현재 시간과의 차이(초)
@@ -23,7 +27,12 @@ export default function JymListDetail() {
 			return formatDistanceToNow(d, { addSuffix: true, locale: ko });
 		}
 		return format(d, 'PPP EEE p', { locale: ko }); // 날짜 포맷
-	}
+	};
+
+	const moveToChat = (targetId, targetName) => {
+		setChatUserId((prev) => ({ ...prev, receiverId: targetId, receiverName: targetName }));
+		navigate(`/chatting-room/${targetId}`);
+	};
 
 	return (
 		<section className="flex flex-col h-full">
@@ -78,7 +87,9 @@ export default function JymListDetail() {
 									</li>
 								</ul>
 							</div>
-							<button className="btn btn-primary">채팅하기</button>
+							<button className="btn btn-primary" onClick={() => moveToChat(user.id, user.username)}>
+								채팅하기
+							</button>
 						</li>
 					))}
 				</ul>

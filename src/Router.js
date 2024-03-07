@@ -15,6 +15,8 @@ import SignUp7 from './pages/authentication/sign-up-steps/SignUp-7';
 import SignUp8 from './pages/authentication/sign-up-steps/SignUp-8';
 import Home from './pages/main/home';
 import JymListDetail from './pages/main/JymListDetail';
+//chat
+import ChattingRoom from './pages/chat/ChattingRoom';
 import NotFoundPage from './pages/404';
 // import Main from './pages/Main/Main';
 
@@ -27,7 +29,7 @@ const Router = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />
 						<Route path="/home/:detail" element={<JymListDetail />} />
-						{/* <Route path="/main" element={<Main />} /> */}
+						<Route path="/chatting-room/:id" element={<ChattingRoom />} />
 					</Route>
 				</Route>
 				{/* Authencation */}

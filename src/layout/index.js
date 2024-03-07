@@ -14,7 +14,7 @@ function Layout() {
 					<div className="content_wrap my-4 mx-5">
 						<Outlet />
 					</div>
-					{splitPathName[1] === 'oauth' || splitPathName[1] === '404' ? '' : <BottomNav />}
+					{splitPathName[1] === 'oauth' || splitPathName[1] === '404' || splitPathName[1] === 'chatting-room' ? '' : <BottomNav />}
 				</section>
 			</div>
 		</MainLayout>
